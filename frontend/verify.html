@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify — NewsWire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue:   #4285F4;
+            --red:    #EA4335;
+            --yellow: #FBBC05;
+            --green:  #34A853;
+            --dark:   #202124;
+            --gray:   #5F6368;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(66,133,244,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 10%, rgba(234,67,53,0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 85%, rgba(52,168,83,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 90%, rgba(251,188,5,0.14) 0%, transparent 50%),
+                #eef2ff;
+            color: var(--dark);
+        }
+
+        .form-card {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 28px;
+            padding: 48px 40px;
+            box-shadow: 0 8px 32px rgba(66,133,244,0.1), 0 2px 8px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95);
+            animation: slideUp 0.6s ease forwards;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-wrap {
+            width: 72px; height: 72px;
+            border-radius: 20px;
+            background: rgba(66,133,244,0.1);
+            border: 1px solid rgba(66,133,244,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 24px;
+            backdrop-filter: blur(8px);
+        }
+
+        .dot-row {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+        .dot {
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        .form-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--dark);
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .form-sub {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 4px;
+            line-height: 1.6;
+        }
+        .email-label {
+            font-size: 14px;
+            color: var(--blue);
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 28px;
+            display: block;
+        }
+
+        .alert {
+            padding: 11px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .alert-error   { background: rgba(234,67,53,0.08); border: 1px solid rgba(234,67,53,0.25); color: var(--red); }
+        .alert-success { background: rgba(52,168,83,0.08);  border: 1px solid rgba(52,168,83,0.25); color: var(--green); }
+
+        .otp-input {
+            width: 100%;
+            background: rgba(255,255,255,0.7);
+            border: 1.5px solid rgba(255,255,255,0.9);
+            border-radius: 14px;
+            padding: 16px;
+            font-size: 30px;
+            text-align: center;
+            letter-spacing: 14px;
+            outline: none;
+            transition: all 0.2s;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            color: var(--dark);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05), inset 0 1px 2px rgba(255,255,255,0.8);
+            backdrop-filter: blur(8px);
+            margin-bottom: 20px;
+        }
+        .otp-input::placeholder { color: #c5cad3; letter-spacing: 10px; font-size: 22px; }
+        .otp-input:focus {
+            border-color: rgba(66,133,244,0.5);
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 0 0 3px rgba(66,133,244,0.12), 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue) 0%, #6aa3f8 100%);
+            color: white;
+            padding: 13px;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 15px;
+            border: 1px solid rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 3px 12px rgba(66,133,244,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+            letter-spacing: 0.3px;
+            margin-bottom: 12px;
+        }
+        .btn-primary:hover { box-shadow: 0 6px 20px rgba(66,133,244,0.45); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        .btn-secondary {
+            width: 100%;
+            background: rgba(255,255,255,0.5);
+            border: 1.5px solid rgba(255,255,255,0.8);
+            color: var(--gray);
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            backdrop-filter: blur(8px);
+            margin-bottom: 24px;
+        }
+        .btn-secondary:hover:not(:disabled) {
+            border-color: rgba(66,133,244,0.35);
+            color: var(--blue);
+            background: rgba(66,133,244,0.06);
+        }
+        .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .footer-text {
+            text-align: center;
+            font-size: 13px;
+            color: var(--gray);
+        }
+        .footer-text a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .footer-text a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="form-card">
+
+        <div class="dot-row">
+            <div class="dot" style="background:var(--blue)"></div>
+            <div class="dot" style="background:var(--red)"></div>
+            <div class="dot" style="background:var(--yellow)"></div>
+            <div class="dot" style="background:var(--green)"></div>
+        </div>
+
+        <div class="icon-wrap">✉️</div>
+
+        <div class="form-title">Check your email</div>
+        <p class="form-sub">We sent a 6-digit code to</p>
+        <span id="email-display" class="email-label"></span>
+
+        <div id="error" class="alert alert-error"></div>
+        <div id="success" class="alert alert-success"></div>
+
+        <input id="code" type="text" placeholder="000000" maxlength="6" class="otp-input"
+            onkeydown="if(event.key==='Enter') verify()"/>
+
+        <button onclick="verify()" id="verify-btn" class="btn-primary">Verify Code</button>
+        <button onclick="resend()" id="resend-btn" class="btn-secondary" disabled>
+            Resend code in <span id="timer">60</span>s
+        </button>
+
+        <p class="footer-text">
+            <a href="/app/signup.html">← Back to signup</a>
+        </p>
+    </div>
+
+    <script>
+        const email = localStorage.getItem("verify_email")
+        const purpose = localStorage.getItem("verify_purpose") || "signup"
+        if (!email) window.location.href = "/app/signup.html"
+        document.getElementById("email-display").textContent = email
+
+        let seconds = 60
+        let timerInterval = null
+        const resendBtn = document.getElementById("resend-btn")
+
+        function startTimer() {
+            seconds = 60
+            resendBtn.disabled = true
+            resendBtn.innerHTML = 'Resend code in <span id="timer">60</span>s'
+            clearInterval(timerInterval)
+            timerInterval = setInterval(() => {
+                seconds--
+                const t = document.getElementById("timer")
+                if (t) t.textContent = seconds
+                if (seconds <= 0) {
+                    clearInterval(timerInterval)
+                    resendBtn.disabled = false
+                    resendBtn.textContent = "Resend code"
+                }
+            }, 1000)
+        }
+        startTimer()
+
+        function showError(msg) {
+            const el = document.getElementById("error")
+            el.textContent = msg; el.style.display = "block"
+            document.getElementById("success").style.display = "none"
+        }
+        function showSuccess(msg) {
+            const el = document.getElementById("success")
+            el.textContent = msg; el.style.display = "block"
+            document.getElementById("error").style.display = "none"
+        }
+
+        async function verify() {
+            const code = document.getElementById("code").value.trim()
+            if (!code || code.length !== 6) return showError("Enter a valid 6-digit code")
+            const btn = document.getElementById("verify-btn")
+            btn.textContent = "Verifying..."; btn.disabled = true
+            try {
+                const res = await fetch("/auth/verify-otp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ email, code, purpose })
+                })
+                const data = await res.json()
+                if (res.ok) {
+                    showSuccess(data.message)
+                    localStorage.removeItem("verify_email")
+                    localStorage.removeItem("verify_purpose")
+                    setTimeout(() => window.location.href = "/app/login.html", 1500)
+                } else {
+                    showError(data.detail)
+                }
+            } finally {
+                btn.textContent = "Verify Code"; btn.disabled = false
+            }
+        }
+
+        async function resend() {
+            try {
+                const res = await fetch("/auth/resend-otp", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    // FIX: ResendOTPRequest only needs email + purpose, no code field
+                    body: JSON.stringify({ email, purpose })
+                })
+                const data = await res.json()
+                if (res.ok) { showSuccess("OTP resent successfully!"); startTimer() }
+                else showError(data.detail)
+            } catch { showError("Failed to resend OTP") }
+        }
+    </script>
+</body>
+</html>

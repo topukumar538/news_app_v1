@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile — NewsWire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --blue: #4285F4;
+            --red: #EA4335;
+            --yellow: #FBBC05;
+            --green: #34A853;
+            --dark: #202124;
+            --gray: #5F6368;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(66, 133, 244, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 10%, rgba(234, 67, 53, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 85%, rgba(52, 168, 83, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 90%, rgba(251, 188, 5, 0.14) 0%, transparent 50%),
+                #eef2ff;
+            color: var(--dark);
+        }
+
+        nav {
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 12px rgba(66, 133, 244, 0.07);
+        }
+
+        .logo {
+            font-family: 'Nunito', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+        .logo .n  { color: var(--blue); }
+        .logo .e  { color: var(--red); }
+        .logo .w  { color: var(--yellow); }
+        .logo .s  { color: var(--blue); }
+        .logo .w2 { color: var(--green); }
+        .logo .i  { color: var(--red); }
+        .logo .r  { color: var(--yellow); }
+        .logo .e2 { color: var(--blue); }
+
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .btn-back {
+            font-size: 13px;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.18s;
+            backdrop-filter: blur(8px);
+        }
+        .btn-back:hover { background: rgba(255, 255, 255, 0.8); color: var(--dark); }
+
+        .btn-logout {
+            font-size: 13px;
+            color: var(--red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(234, 67, 53, 0.07);
+            border: 1px solid rgba(234, 67, 53, 0.2);
+            cursor: pointer;
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+        }
+        .btn-logout:hover { background: rgba(234, 67, 53, 0.14); }
+
+        .page-wrap {
+            max-width: 560px;
+            margin: 40px auto;
+            padding: 0 20px 80px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 36px 36px;
+            box-shadow: 0 8px 32px rgba(66, 133, 244, 0.09), 0 2px 8px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+            margin-bottom: 22px;
+        }
+
+        .avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), #6aa3f8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Nunito', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 14px rgba(66, 133, 244, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .avatar-info-name {
+            font-family: 'Nunito', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.3px;
+        }
+
+        .avatar-info-email {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 300;
+            margin-top: 2px;
+        }
+
+        .section-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .field-wrap { margin-bottom: 18px; }
+
+        .field-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 7px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            color: var(--dark);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+        .input-field::placeholder { color: #aab0bb; }
+        .input-field:focus {
+            border-color: rgba(66, 133, 244, 0.5);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12), 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-field.otp-input {
+            text-align: center;
+            font-size: 22px;
+            letter-spacing: 10px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--blue) 0%, #6aa3f8 100%);
+            color: white;
+            padding: 13px;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 3px 12px rgba(66, 133, 244, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.3px;
+        }
+        .btn-primary:hover { box-shadow: 0 6px 20px rgba(66, 133, 244, 0.45); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        .btn-otp {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.65);
+            color: var(--blue);
+            padding: 13px;
+            border-radius: 14px;
+            font-weight: 500;
+            font-size: 15px;
+            border: 1.5px solid rgba(66, 133, 244, 0.25);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            backdrop-filter: blur(8px);
+        }
+        .btn-otp:hover { background: rgba(66, 133, 244, 0.08); border-color: rgba(66, 133, 244, 0.4); transform: translateY(-1px); }
+        .btn-otp:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        .alert {
+            padding: 11px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .alert-error   { background: rgba(234, 67, 53, 0.08); border: 1px solid rgba(234, 67, 53, 0.25); color: var(--red); }
+        .alert-success { background: rgba(52, 168, 83, 0.08);  border: 1px solid rgba(52, 168, 83, 0.25); color: var(--green); }
+
+        .otp-hint {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            nav { padding: 12px 20px; }
+            .glass-card { padding: 24px 22px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="/app/news.html" class="logo">
+            <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
+        </a>
+        <div class="nav-right">
+            <a href="/app/news.html" class="btn-back">← Back to News</a>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+
+        <!-- PROFILE CARD -->
+        <div class="glass-card">
+            <div class="avatar-row">
+                <div class="avatar" id="avatar"></div>
+                <div>
+                    <div class="avatar-info-name" id="display-username"></div>
+                    <div class="avatar-info-email" id="display-email"></div>
+                </div>
+            </div>
+
+            <div class="section-title">
+                <div class="section-title-dot" style="background:var(--blue)"></div>
+                Edit Profile
+            </div>
+
+            <div id="profile-error" class="alert alert-error"></div>
+            <div id="profile-success" class="alert alert-success"></div>
+
+            <div class="field-wrap">
+                <label class="field-label">Username</label>
+                <input id="username" type="text" class="input-field" placeholder="Your username" />
+            </div>
+
+            <button onclick="updateProfile()" id="profile-btn" class="btn-primary">
+                Update Profile
+            </button>
+        </div>
+
+        <!-- CHANGE PASSWORD CARD -->
+        <div class="glass-card">
+            <div class="section-title">
+                <div class="section-title-dot" style="background:var(--red)"></div>
+                Change Password
+            </div>
+
+            <div id="pass-error" class="alert alert-error"></div>
+            <div id="pass-success" class="alert alert-success"></div>
+
+            <!-- OTP Section (hidden by default) -->
+            <div id="otp-section" style="display:none;">
+                <div class="field-wrap">
+                    <label class="field-label">OTP Code</label>
+                    <input id="otp-code" type="text" placeholder="······" maxlength="6" class="input-field otp-input" />
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">New Password</label>
+                    <input id="new-password" type="password" placeholder="Min 6 characters" class="input-field" />
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Confirm Password</label>
+                    <input id="confirm-password" type="password" placeholder="Repeat new password" class="input-field" />
+                </div>
+                <button onclick="changePassword()" id="change-btn" class="btn-primary">
+                    Change Password
+                </button>
+            </div>
+
+            <!-- Request OTP Section (visible by default) -->
+            <div id="request-otp-section">
+                <p class="otp-hint">We'll send a one-time code to your email to verify the change.</p>
+                <button onclick="requestOTP()" id="otp-btn" class="btn-otp">
+                    Send OTP to Email
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        async function loadProfile() {
+            const res = await fetch("/auth/me", { credentials: "include" })
+            if (!res.ok) return window.location.href = "/app/login.html"
+            const user = await res.json()
+            document.getElementById("display-username").textContent = user.username
+            document.getElementById("display-email").textContent = user.email
+            document.getElementById("username").value = user.username
+            document.getElementById("avatar").textContent = user.username[0].toUpperCase()
+        }
+
+        async function updateProfile() {
+            const username = document.getElementById("username").value.trim()
+            if (!username) return showMsg("profile-error", "Username cannot be empty")
+
+            const btn = document.getElementById("profile-btn")
+            btn.textContent = "Saving..."
+            btn.disabled = true
+
+            try {
+                const res = await fetch("/user/profile", {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ username })
+                })
+                const data = await res.json()
+                if (res.ok) {
+                    showMsg("profile-success", "Profile updated!")
+                    document.getElementById("display-username").textContent = username
+                    document.getElementById("avatar").textContent = username[0].toUpperCase()
+                } else {
+                    showMsg("profile-error", data.detail)
+                }
+            } finally {
+                btn.textContent = "Update Profile"
+                btn.disabled = false
+            }
+        }
+
+        async function requestOTP() {
+            const btn = document.getElementById("otp-btn")
+            btn.textContent = "Sending..."
+            btn.disabled = true
+
+            try {
+                const res = await fetch("/auth/request-change-password-otp", {
+                    method: "POST",
+                    credentials: "include"
+                })
+                const data = await res.json()
+                if (res.ok) {
+                    showMsg("pass-success", "OTP sent to your email!")
+                    // FIX: use style.display instead of classList (no Tailwind processing)
+                    document.getElementById("request-otp-section").style.display = "none"
+                    document.getElementById("otp-section").style.display = "block"
+                } else {
+                    showMsg("pass-error", data.detail)
+                }
+            } finally {
+                btn.textContent = "Send OTP to Email"
+                btn.disabled = false
+            }
+        }
+
+        async function changePassword() {
+            const code = document.getElementById("otp-code").value.trim()
+            const new_password = document.getElementById("new-password").value
+            const confirm_password = document.getElementById("confirm-password").value
+
+            if (!code || code.length !== 6) return showMsg("pass-error", "Enter valid OTP")
+            if (!new_password || !confirm_password) return showMsg("pass-error", "All fields required")
+            if (new_password !== confirm_password) return showMsg("pass-error", "Passwords do not match")
+
+            const btn = document.getElementById("change-btn")
+            btn.textContent = "Changing..."
+            btn.disabled = true
+
+            try {
+                const res = await fetch("/auth/change-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ code, new_password, confirm_password })
+                })
+                const data = await res.json()
+                if (res.ok) {
+                    showMsg("pass-success", "Password changed successfully!")
+                    // FIX: use style.display instead of classList
+                    document.getElementById("otp-section").style.display = "none"
+                    document.getElementById("request-otp-section").style.display = "block"
+                    document.getElementById("otp-code").value = ""
+                    document.getElementById("new-password").value = ""
+                    document.getElementById("confirm-password").value = ""
+                } else {
+                    showMsg("pass-error", data.detail)
+                }
+            } finally {
+                btn.textContent = "Change Password"
+                btn.disabled = false
+            }
+        }
+
+        // FIX: use style.display throughout — classList.add/remove("hidden") doesn't work
+        // because Tailwind's .hidden class isn't compiled in CDN mode for dynamic use
+        function showMsg(id, msg) {
+            const allIds = ["profile-error", "profile-success", "pass-error", "pass-success"]
+            allIds.forEach(i => {
+                document.getElementById(i).style.display = "none"
+            })
+            const el = document.getElementById(id)
+            el.textContent = msg
+            el.style.display = "block"
+        }
+
+        async function logout() {
+            await fetch("/auth/logout", { method: "POST", credentials: "include" })
+            window.location.href = "/app/index.html"
+        }
+
+        loadProfile()
+    </script>
+</body>
+
+</html>

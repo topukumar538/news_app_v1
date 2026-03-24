@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin — Feedback | NewsWire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue:   #4285F4;
+            --red:    #EA4335;
+            --yellow: #FBBC05;
+            --green:  #34A853;
+            --dark:   #202124;
+            --gray:   #5F6368;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(66,133,244,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 10%, rgba(234,67,53,0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 85%, rgba(52,168,83,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 90%, rgba(251,188,5,0.14) 0%, transparent 50%),
+                #eef2ff;
+            color: var(--dark);
+        }
+
+        nav {
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 2px 12px rgba(66,133,244,0.07);
+        }
+
+        .logo {
+            font-family: 'Nunito', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+        .logo .n  { color: var(--blue); }
+        .logo .e  { color: var(--red); }
+        .logo .w  { color: var(--yellow); }
+        .logo .s  { color: var(--blue); }
+        .logo .w2 { color: var(--green); }
+        .logo .i  { color: var(--red); }
+        .logo .r  { color: var(--yellow); }
+        .logo .e2 { color: var(--blue); }
+
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .btn-back {
+            font-size: 13px;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.18s;
+            backdrop-filter: blur(8px);
+        }
+        .btn-back:hover { background: rgba(255,255,255,0.8); color: var(--dark); }
+
+        .btn-logout {
+            font-size: 13px;
+            color: var(--red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(234,67,53,0.07);
+            border: 1px solid rgba(234,67,53,0.2);
+            cursor: pointer;
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+        }
+        .btn-logout:hover { background: rgba(234,67,53,0.14); }
+
+        .page-wrap {
+            max-width: 780px;
+            margin: 40px auto;
+            padding: 0 20px 80px;
+        }
+
+        .page-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        .page-sub {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+
+        .feedback-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 20px;
+            padding: 24px 26px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(66,133,244,0.07), 0 1px 4px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.9);
+            transition: all 0.2s;
+        }
+        .feedback-card:hover {
+            box-shadow: 0 8px 24px rgba(66,133,244,0.11), inset 0 1px 0 rgba(255,255,255,1);
+            transform: translateY(-2px);
+        }
+        .feedback-card.resolved { opacity: 0.6; }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .user-row { display: flex; align-items: center; gap: 12px; }
+
+        .avatar {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), #6aa3f8);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 2px 8px rgba(66,133,244,0.3);
+            flex-shrink: 0;
+        }
+
+        .user-name { font-size: 14px; font-weight: 500; color: var(--dark); }
+        .user-email { font-size: 12px; color: var(--gray); font-weight: 300; }
+
+        .card-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+        .stars { color: var(--yellow); font-size: 15px; letter-spacing: 1px; }
+        .stars .empty { color: #d1d5db; }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .badge-pending  { background: rgba(251,188,5,0.12);  color: #b45309; border: 1px solid rgba(251,188,5,0.3); }
+        .badge-resolved { background: rgba(52,168,83,0.1);   color: #166534; border: 1px solid rgba(52,168,83,0.25); }
+
+        .feedback-msg {
+            font-size: 14px;
+            color: #3a3d42;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .feedback-date { font-size: 12px; color: #b0b5bc; font-weight: 300; }
+
+        .card-actions { display: flex; gap: 8px; }
+
+        .btn-resolve, .btn-delete {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+            backdrop-filter: blur(8px);
+        }
+        .btn-resolve {
+            background: rgba(52,168,83,0.08);
+            border: 1px solid rgba(52,168,83,0.25);
+            color: #166534;
+        }
+        .btn-resolve:hover { background: rgba(52,168,83,0.16); }
+        .btn-resolve.unresolve {
+            background: rgba(251,188,5,0.08);
+            border: 1px solid rgba(251,188,5,0.3);
+            color: #b45309;
+        }
+        .btn-resolve.unresolve:hover { background: rgba(251,188,5,0.16); }
+        .btn-delete {
+            background: rgba(234,67,53,0.07);
+            border: 1px solid rgba(234,67,53,0.2);
+            color: var(--red);
+        }
+        .btn-delete:hover { background: rgba(234,67,53,0.14); }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background: rgba(255,255,255,0.45);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 24px;
+        }
+        .empty-icon { font-size: 52px; margin-bottom: 16px; }
+        .empty-text { font-size: 15px; color: var(--gray); font-weight: 300; }
+
+        @media (max-width: 600px) {
+            nav { padding: 12px 20px; }
+            .card-top { flex-direction: column; gap: 10px; }
+            .card-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/app/admin.html" class="logo">
+            <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
+        </a>
+        <div class="nav-right">
+            <a href="/app/admin.html" class="btn-back">← Admin Panel</a>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+        <div class="page-title">Feedback</div>
+        <p class="page-sub">User submitted feedback</p>
+        <div id="feedback-list"></div>
+    </div>
+
+    <script>
+        async function checkAdmin() {
+            const res = await fetch("/auth/me", { credentials: "include" })
+            if (!res.ok) return window.location.href = "/app/login.html"
+            const user = await res.json()
+            // FIX: was /app/news.html which doesn't exist
+            if (user.role !== "admin") window.location.href = "/app/news.html"
+        }
+
+        async function loadFeedback() {
+            const res = await fetch("/admin/feedback", { credentials: "include" })
+            if (!res.ok) return
+            const feedbacks = await res.json()
+            const container = document.getElementById("feedback-list")
+
+            if (feedbacks.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">💬</div>
+                        <p class="empty-text">No feedback yet.</p>
+                    </div>`
+                return
+            }
+
+            container.innerHTML = feedbacks.map(f => `
+                <div class="feedback-card ${f.is_resolved ? 'resolved' : ''}">
+                    <div class="card-top">
+                        <div class="user-row">
+                            <div class="avatar">${f.username[0].toUpperCase()}</div>
+                            <div>
+                                <div class="user-name">${f.username}</div>
+                                <div class="user-email">${f.email}</div>
+                            </div>
+                        </div>
+                        <div class="card-right">
+                            <span class="stars">${"★".repeat(f.rating)}<span class="empty">${"★".repeat(5 - f.rating)}</span></span>
+                            ${f.is_resolved
+                                ? '<span class="badge badge-resolved">Resolved</span>'
+                                : '<span class="badge badge-pending">Pending</span>'
+                            }
+                        </div>
+                    </div>
+                    <p class="feedback-msg">${f.message}</p>
+                    <div class="card-bottom">
+                        <span class="feedback-date">${f.created_at.substring(0, 10)}</span>
+                        <div class="card-actions">
+                            <button onclick="resolve(${f.id})" class="btn-resolve ${f.is_resolved ? 'unresolve' : ''}">
+                                ${f.is_resolved ? "Unresolve" : "Resolve"}
+                            </button>
+                            <button onclick="deleteFeedback(${f.id})" class="btn-delete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `).join("")
+        }
+
+        async function resolve(id) {
+            const res = await fetch(`/admin/feedback/${id}/resolve`, {
+                method: "PATCH", credentials: "include"
+            })
+            if (res.ok) loadFeedback()
+        }
+
+        async function deleteFeedback(id) {
+            if (!confirm("Delete this feedback?")) return
+            const res = await fetch(`/admin/feedback/${id}`, {
+                method: "DELETE", credentials: "include"
+            })
+            if (res.ok) loadFeedback()
+        }
+
+        async function logout() {
+            await fetch("/auth/logout", { method: "POST", credentials: "include" })
+            window.location.href = "/app/index.html"
+        }
+
+        checkAdmin()
+        loadFeedback()
+    </script>
+</body>
+</html>

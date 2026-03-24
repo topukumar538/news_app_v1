@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin — Users | NewsWire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blue:   #4285F4;
+            --red:    #EA4335;
+            --yellow: #FBBC05;
+            --green:  #34A853;
+            --dark:   #202124;
+            --gray:   #5F6368;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            background:
+                radial-gradient(ellipse at 10% 20%, rgba(66,133,244,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 10%, rgba(234,67,53,0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 85%, rgba(52,168,83,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 90%, rgba(251,188,5,0.14) 0%, transparent 50%),
+                #eef2ff;
+            color: var(--dark);
+        }
+
+        /* NAVBAR */
+        nav {
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 2px 12px rgba(66,133,244,0.07);
+        }
+
+        .logo {
+            font-family: 'Nunito', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+        .logo .n  { color: var(--blue); }
+        .logo .e  { color: var(--red); }
+        .logo .w  { color: var(--yellow); }
+        .logo .s  { color: var(--blue); }
+        .logo .w2 { color: var(--green); }
+        .logo .i  { color: var(--red); }
+        .logo .r  { color: var(--yellow); }
+        .logo .e2 { color: var(--blue); }
+
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+
+        .btn-back {
+            font-size: 13px;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: all 0.18s;
+            backdrop-filter: blur(8px);
+        }
+        .btn-back:hover { background: rgba(255,255,255,0.8); color: var(--dark); }
+
+        .btn-logout {
+            font-size: 13px;
+            color: var(--red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(234,67,53,0.07);
+            border: 1px solid rgba(234,67,53,0.2);
+            cursor: pointer;
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+        }
+        .btn-logout:hover { background: rgba(234,67,53,0.14); }
+
+        /* PAGE */
+        .page-wrap {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px 80px;
+        }
+
+        .page-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+        .page-sub {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+
+        /* TABLE CARD */
+        .table-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(66,133,244,0.09), 0 2px 8px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.95);
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+        thead {
+            background: rgba(255,255,255,0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.7);
+        }
+        th {
+            text-align: left;
+            padding: 16px 22px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: rgba(255,255,255,0.35); }
+
+        td { padding: 16px 22px; vertical-align: middle; }
+
+        /* AVATAR */
+        .avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue), #6aa3f8);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 2px 8px rgba(66,133,244,0.3);
+            flex-shrink: 0;
+        }
+
+        .user-cell { display: flex; align-items: center; gap: 12px; }
+        .username { font-weight: 500; color: var(--dark); font-size: 14px; }
+        .email-cell { color: var(--gray); font-size: 13px; font-weight: 300; }
+        .date-cell { color: #b0b5bc; font-size: 12px; font-weight: 300; }
+
+        /* BADGES */
+        .badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .badge-active    { background: rgba(52,168,83,0.1);   color: #166534; border: 1px solid rgba(52,168,83,0.25); }
+        .badge-blocked   { background: rgba(234,67,53,0.08);  color: var(--red); border: 1px solid rgba(234,67,53,0.2); }
+        .badge-unverified{ background: rgba(251,188,5,0.1);   color: #b45309; border: 1px solid rgba(251,188,5,0.3); }
+        .badge-admin     { background: rgba(66,133,244,0.1);  color: var(--blue); border: 1px solid rgba(66,133,244,0.2); }
+
+        /* ACTION BUTTONS */
+        .action-btn {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+            backdrop-filter: blur(8px);
+        }
+        .btn-block {
+            background: rgba(251,188,5,0.08);
+            border: 1px solid rgba(251,188,5,0.3);
+            color: #b45309;
+        }
+        .btn-block:hover { background: rgba(251,188,5,0.18); }
+        .btn-unblock {
+            background: rgba(52,168,83,0.08);
+            border: 1px solid rgba(52,168,83,0.25);
+            color: #166534;
+        }
+        .btn-unblock:hover { background: rgba(52,168,83,0.16); }
+        .btn-delete {
+            background: rgba(234,67,53,0.07);
+            border: 1px solid rgba(234,67,53,0.2);
+            color: var(--red);
+        }
+        .btn-delete:hover { background: rgba(234,67,53,0.14); }
+
+        .actions-cell { display: flex; gap: 8px; align-items: center; }
+
+        /* EMPTY */
+        .empty-row td {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+            font-weight: 300;
+            font-size: 14px;
+        }
+
+        @media (max-width: 700px) {
+            nav { padding: 12px 20px; }
+            .page-wrap { padding: 0 12px 60px; }
+            th, td { padding: 12px 14px; }
+            .email-cell, .date-cell { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <a href="/app/admin.html" class="logo">
+            <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
+        </a>
+        <div class="nav-right">
+            <a href="/app/admin.html" class="btn-back">← Admin Panel</a>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <div class="page-wrap">
+        <div class="page-title">User Management</div>
+        <p class="page-sub">View, block and delete users</p>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Joined</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        async function checkAdmin() {
+            const res = await fetch("/auth/me", { credentials: "include" })
+            if (!res.ok) return window.location.href = "/app/login.html"
+            const user = await res.json()
+            if (user.role !== "admin") window.location.href = "/app/news.html"
+        }
+
+        async function loadUsers() {
+            const res = await fetch("/admin/users", { credentials: "include" })
+            if (!res.ok) return
+            const users = await res.json()
+            const tbody = document.getElementById("user-table")
+
+            if (users.length === 0) {
+                tbody.innerHTML = `<tr class="empty-row"><td colspan="5">No users found</td></tr>`
+                return
+            }
+
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>
+                        <div class="user-cell">
+                            <div class="avatar">${u.username[0].toUpperCase()}</div>
+                            <div>
+                                <span class="username">${u.username}</span>
+                                ${u.role === "admin" ? ' <span class="badge badge-admin" style="margin-left:6px;">admin</span>' : ""}
+                            </div>
+                        </div>
+                    </td>
+                    <td class="email-cell">${u.email}</td>
+                    <td>
+                        ${u.is_blocked
+                            ? '<span class="badge badge-blocked">Blocked</span>'
+                            : u.is_active
+                                ? '<span class="badge badge-active">Active</span>'
+                                : '<span class="badge badge-unverified">Unverified</span>'
+                        }
+                    </td>
+                    <td class="date-cell">${u.created_at.substring(0, 10)}</td>
+                    <td>
+                        ${u.role !== "admin" ? `
+                            <div class="actions-cell">
+                                <button onclick="toggleBlock(${u.id})" class="action-btn ${u.is_blocked ? 'btn-unblock' : 'btn-block'}">
+                                    ${u.is_blocked ? "Unblock" : "Block"}
+                                </button>
+                                <button onclick="deleteUser(${u.id})" class="action-btn btn-delete">Delete</button>
+                            </div>
+                        ` : '<span style="color:#d1d5db;font-size:13px;">—</span>'}
+                    </td>
+                </tr>
+            `).join("")
+        }
+
+        async function toggleBlock(userId) {
+            const res = await fetch(`/admin/users/${userId}/block`, {
+                method: "PATCH", credentials: "include"
+            })
+            if (res.ok) loadUsers()
+        }
+
+        async function deleteUser(userId) {
+            if (!confirm("Are you sure you want to delete this user?")) return
+            const res = await fetch(`/admin/users/${userId}`, {
+                method: "DELETE", credentials: "include"
+            })
+            if (res.ok) loadUsers()
+        }
+
+        async function logout() {
+            await fetch("/auth/logout", { method: "POST", credentials: "include" })
+            window.location.href = "/app/index.html"
+        }
+
+        checkAdmin()
+        loadUsers()
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed — NewsWire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Libre+Baskerville:ital,wght@0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --blue:#4285F4; --red:#EA4335; --yellow:#FBBC05; --green:#34A853; --dark:#202124; --gray:#5F6368; }
+        * { box-sizing:border-box; margin:0; padding:0; }
+        body {
+            font-family:'IBM Plex Sans',sans-serif; min-height:100vh;
+            background:
+                radial-gradient(ellipse at 10% 20%,rgba(66,133,244,0.15) 0%,transparent 55%),
+                radial-gradient(ellipse at 90% 10%,rgba(234,67,53,0.12) 0%,transparent 50%),
+                radial-gradient(ellipse at 80% 85%,rgba(52,168,83,0.12) 0%,transparent 50%),
+                radial-gradient(ellipse at 20% 90%,rgba(251,188,5,0.12) 0%,transparent 50%),
+                #eef2ff;
+            color:var(--dark);
+        }
+        nav { padding:12px 36px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.68); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); border-bottom:1px solid rgba(255,255,255,0.85); box-shadow:0 2px 14px rgba(66,133,244,0.08); }
+        .logo{font-family:'Nunito',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;text-decoration:none}
+        .logo .n{color:var(--blue)} .logo .e{color:var(--red)} .logo .w{color:var(--yellow)} .logo .s{color:var(--blue)}
+        .logo .w2{color:var(--green)} .logo .i{color:var(--red)} .logo .r{color:var(--yellow)} .logo .e2{color:var(--blue)}
+        .nav-right{display:flex;align-items:center;gap:6px}
+        .nav-link{font-size:13px;color:var(--gray);text-decoration:none;padding:7px 12px;border-radius:20px;transition:all .18s}
+        .nav-link:hover{background:rgba(255,255,255,.7);color:var(--dark)}
+        .nav-username{font-size:13px;font-weight:500;color:var(--dark);padding:7px 14px;background:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.8);border-radius:20px}
+        .nav-admin{font-size:12px;font-weight:600;color:var(--blue);padding:6px 14px;border-radius:20px;background:rgba(66,133,244,.1);border:1px solid rgba(66,133,244,.2);text-decoration:none}
+        .btn-logout{font-size:13px;color:var(--red);padding:7px 14px;border-radius:20px;background:rgba(234,67,53,.07);border:1px solid rgba(234,67,53,.2);cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .18s}
+        .btn-logout:hover{background:rgba(234,67,53,.14)}
+
+        .cat-tabs{display:flex;padding:0 36px;background:rgba(255,255,255,.55);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.75);overflow-x:auto;scrollbar-width:none}
+        .cat-tabs::-webkit-scrollbar{display:none}
+        .cat-tab{padding:13px 20px;font-size:13px;font-weight:500;color:var(--gray);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;font-family:'IBM Plex Sans',sans-serif}
+        .cat-tab:hover{color:var(--dark)}
+        .cat-tab.active{color:var(--dark);border-bottom-color:var(--dark)}
+        .cat-tab.active.t-national{color:var(--blue);border-bottom-color:var(--blue)}
+        .cat-tab.active.t-international{color:var(--red);border-bottom-color:var(--red)}
+        .cat-tab.active.t-sports{color:#166634;border-bottom-color:var(--green)}
+        .cat-tab.active.t-business{color:#b45309;border-bottom-color:var(--yellow)}
+
+        .page-wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+
+        .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;margin-top:36px}
+        .sec-head:first-child{margin-top:0}
+        .sec-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap}
+        .sec-line{flex:1;height:1px;background:rgba(0,0,0,.08)}
+        .sl-national{color:var(--blue)} .sl-international{color:var(--red)} .sl-sports{color:#166534} .sl-business{color:#b45309}
+
+        /* HERO */
+        .hero-card{display:block;text-decoration:none;background:rgba(255,255,255,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.85);border-radius:22px;overflow:hidden;box-shadow:0 4px 20px rgba(66,133,244,.09),inset 0 1px 0 rgba(255,255,255,.95);transition:all .22s;margin-bottom:14px}
+        .hero-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(66,133,244,.14);background:rgba(255,255,255,.82)}
+        .hero-img-wrap{width:100%;height:300px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(234,67,53,.04));display:flex;align-items:center;justify-content:center}
+        .hero-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+        .hero-card:hover .hero-img{transform:scale(1.03)}
+        .hero-body{padding:20px 22px}
+        .hero-meta{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+        .source-favicon{width:14px;height:14px;border-radius:3px;flex-shrink:0}
+        .source-name{font-size:11px;font-weight:500;color:var(--gray)}
+        .card-time{font-size:11px;color:#b0b5bc;font-weight:300}
+        .hero-title{font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;line-height:1.4;color:var(--dark)}
+
+        /* GRID */
+        .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:8px}
+        .news-card{display:block;text-decoration:none;background:rgba(255,255,255,.58);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.82);border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(66,133,244,.07),inset 0 1px 0 rgba(255,255,255,.9);transition:all .2s}
+        .news-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(66,133,244,.13);background:rgba(255,255,255,.8)}
+        .card-img-wrap{height:150px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(234,67,53,.04));display:flex;align-items:center;justify-content:center}
+        .card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+        .news-card:hover .card-img{transform:scale(1.05)}
+        .card-body{padding:14px}
+        .card-title{font-family:'Libre Baskerville',serif;font-size:14px;font-weight:700;line-height:1.45;color:var(--dark);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px}
+        .card-meta{display:flex;justify-content:space-between;align-items:center}
+        .source-badge{display:flex;align-items:center;gap:5px}
+        .placeholder-icon{font-size:40px;opacity:.15}
+
+        .skeleton{background:linear-gradient(90deg,rgba(255,255,255,.4) 25%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.4) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:18px}
+        @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+        .empty-state{text-align:center;padding:70px 20px;background:rgba(255,255,255,.45);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.7);border-radius:20px}
+
+        @media(max-width:700px){nav{padding:10px 16px}.cat-tabs{padding:0 10px}.page-wrap{padding:20px 12px 60px}.news-grid{grid-template-columns:1fr 1fr}.hero-img-wrap{height:200px}}
+        @media(max-width:480px){.news-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="/app/news.html" class="logo">
+        <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
+    </a>
+    <div class="nav-right">
+        <span id="username-display" class="nav-username"></span>
+        <a href="/app/feedback.html" class="nav-link">💬 Feedback</a>
+        <a href="/app/profile.html" class="nav-link">👤 Profile</a>
+        <a href="/app/admin.html" id="admin-link" style="display:none;" class="nav-admin">⚙ Admin</a>
+        <button onclick="logout()" class="btn-logout">Logout</button>
+    </div>
+</nav>
+
+<div class="cat-tabs">
+    <button class="cat-tab active" onclick="setTab('all',this)">🏠 All</button>
+    <button class="cat-tab t-national"      onclick="setTab('national',this)">🇧🇩 National</button>
+    <button class="cat-tab t-international" onclick="setTab('international',this)">🌍 International</button>
+    <button class="cat-tab t-sports"        onclick="setTab('sports',this)">⚽ Sports</button>
+    <button class="cat-tab t-business"      onclick="setTab('business',this)">📈 Business</button>
+</div>
+
+<div class="page-wrap" id="page-wrap">
+    <div class="skeleton" style="height:300px;margin-bottom:14px;border-radius:22px;"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;">
+        <div class="skeleton" style="height:220px;"></div>
+        <div class="skeleton" style="height:220px;"></div>
+        <div class="skeleton" style="height:220px;"></div>
+    </div>
+</div>
+
+<script>
+const CAT_META = {
+    national:      {label:'🇧🇩 National',      sl:'sl-national',      tab:'t-national'},
+    international: {label:'🌍 International',  sl:'sl-international', tab:'t-international'},
+    sports:        {label:'⚽ Sports',          sl:'sl-sports',        tab:'t-sports'},
+    business:      {label:'📈 Business',        sl:'sl-business',      tab:'t-business'},
+}
+let allNews = {}, activeTab = 'all'
+
+async function loadUser() {
+    try {
+        const res = await fetch("/auth/me", {credentials:"include"})
+        if (res.status === 401) return window.location.href = "/app/login.html"
+        const user = await res.json()
+        document.getElementById("username-display").textContent = user.username
+        if (user.role === "admin") document.getElementById("admin-link").style.display = "inline-block"
+    } catch(e) {}
+}
+
+async function loadNews() {
+    try {
+        const res = await fetch("/news", {credentials:"include"})
+        if (res.status === 401) return window.location.href = "/app/login.html"
+        // title and image come directly from DB — no OG scraping
+        allNews = await res.json()
+        renderPage()
+    } catch(e) {
+        document.getElementById('page-wrap').innerHTML = `
+            <div class="empty-state">
+                <div style="font-size:44px;margin-bottom:12px">⚠️</div>
+                <p style="color:var(--gray);font-size:14px;">Could not load news. Please try again.</p>
+            </div>`
+    }
+}
+
+function setTab(cat, btn) {
+    activeTab = cat
+    document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+    renderPage()
+}
+
+function timeAgo(str) {
+    if (!str) return ''
+    const diff = (Date.now() - new Date(str)) / 1000
+    if (diff < 60)    return 'Just now'
+    if (diff < 3600)  return Math.floor(diff/60) + 'm ago'
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago'
+    return Math.floor(diff/86400) + 'd ago'
+}
+function getFavicon(link) {
+    try { return `https://www.google.com/s2/favicons?domain=${new URL(link).hostname}&sz=32` }
+    catch { return '' }
+}
+function getDomain(link) {
+    try { return new URL(link).hostname.replace('www.','') }
+    catch { return link }
+}
+
+function renderPage() {
+    const cats = activeTab === 'all' ? Object.keys(allNews) : [activeTab]
+    const wrap = document.getElementById('page-wrap')
+    let html = ''
+
+    for (const cat of cats) {
+        const items = allNews[cat] || []
+        if (!items.length) continue
+        const m = CAT_META[cat] || {}
+
+        html += `<div class="sec-head"><span class="sec-label ${m.sl}">${m.label}</span><div class="sec-line"></div></div>`
+
+        // HERO
+        const hero = items[0]
+        html += `
+        <a class="hero-card" href="${hero.link}" target="_blank" rel="noopener noreferrer">
+            <div class="hero-img-wrap">
+                ${hero.image
+                    ? `<img class="hero-img" src="${hero.image}" onerror="this.parentElement.innerHTML='<span class=placeholder-icon>📰</span>'" loading="lazy">`
+                    : `<span class="placeholder-icon">📰</span>`}
+            </div>
+            <div class="hero-body">
+                <div class="hero-meta">
+                    <img class="source-favicon" src="${getFavicon(hero.link)}" onerror="this.style.display='none'">
+                    <span class="source-name">${getDomain(hero.link)}</span>
+                    <span style="color:#d1d5db;margin:0 4px;">·</span>
+                    <span class="card-time">${timeAgo(hero.created_at)}</span>
+                </div>
+                <div class="hero-title">${hero.title || getDomain(hero.link)}</div>
+            </div>
+        </a>`
+
+        // GRID
+        const rest = items.slice(1)
+        if (rest.length) {
+            html += `<div class="news-grid">`
+            rest.forEach(a => {
+                html += `
+                <a class="news-card" href="${a.link}" target="_blank" rel="noopener noreferrer">
+                    <div class="card-img-wrap">
+                        ${a.image
+                            ? `<img class="card-img" src="${a.image}" onerror="this.parentElement.innerHTML='<span class=placeholder-icon>📰</span>'" loading="lazy">`
+                            : `<span class="placeholder-icon">📰</span>`}
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${a.title || getDomain(a.link)}</div>
+                        <div class="card-meta">
+                            <div class="source-badge">
+                                <img class="source-favicon" src="${getFavicon(a.link)}" onerror="this.style.display='none'">
+                                <span class="source-name">${getDomain(a.link)}</span>
+                            </div>
+                            <span class="card-time">${timeAgo(a.created_at)}</span>
+                        </div>
+                    </div>
+                </a>`
+            })
+            html += `</div>`
+        }
+    }
+
+    if (!html) {
+        html = `<div class="empty-state">
+            <div style="font-size:48px;margin-bottom:12px">📭</div>
+            <p style="color:var(--gray);font-size:14px;font-weight:300">No news yet. Check back soon.</p>
+        </div>`
+    }
+    wrap.innerHTML = html
+}
+
+async function logout() {
+    await fetch("/auth/logout", {method:"POST", credentials:"include"})
+    window.location.href = "/app/index.html"
+}
+
+loadUser()
+loadNews()
+</script>
+</body>
+</html>
