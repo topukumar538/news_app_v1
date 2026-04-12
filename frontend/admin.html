@@ -1,376 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel — NewsWire</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <style>
-        :root { --blue:#4285F4; --red:#EA4335; --yellow:#FBBC05; --green:#34A853; --dark:#202124; --gray:#5F6368; }
-        * { box-sizing:border-box; margin:0; padding:0; }
+        :root {
+            --blue: #4285F4;
+            --red: #EA4335;
+            --yellow: #FBBC05;
+            --green: #34A853;
+            --dark: #202124;
+            --gray: #5F6368;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family:'Roboto',sans-serif; min-height:100vh;
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
             background:
-                radial-gradient(ellipse at 10% 20%,rgba(66,133,244,0.18) 0%,transparent 55%),
-                radial-gradient(ellipse at 90% 10%,rgba(234,67,53,0.14) 0%,transparent 50%),
-                radial-gradient(ellipse at 80% 85%,rgba(52,168,83,0.15) 0%,transparent 50%),
-                radial-gradient(ellipse at 20% 90%,rgba(251,188,5,0.14) 0%,transparent 50%),
+                radial-gradient(ellipse at 10% 20%, rgba(66, 133, 244, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 10%, rgba(234, 67, 53, 0.14) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 85%, rgba(52, 168, 83, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 90%, rgba(251, 188, 5, 0.14) 0%, transparent 50%),
                 #eef2ff;
-            color:var(--dark);
+            color: var(--dark);
         }
+
         nav {
-            padding:14px 40px; display:flex; align-items:center; justify-content:space-between;
-            position:sticky; top:0; z-index:100;
-            background:rgba(255,255,255,0.6); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid rgba(255,255,255,0.8); box-shadow:0 2px 12px rgba(66,133,244,0.07);
+            padding: 14px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 12px rgba(66, 133, 244, 0.07);
         }
-        .logo { font-family:'Nunito',sans-serif; font-size:24px; font-weight:800; letter-spacing:-0.5px; text-decoration:none; }
-        .logo .n{color:var(--blue)} .logo .e{color:var(--red)} .logo .w{color:var(--yellow)} .logo .s{color:var(--blue)}
-        .logo .w2{color:var(--green)} .logo .i{color:var(--red)} .logo .r{color:var(--yellow)} .logo .e2{color:var(--blue)}
-        .nav-right { display:flex; align-items:center; gap:12px; }
-        .btn-nav-link { font-size:13px; color:var(--gray); text-decoration:none; padding:8px 16px; border-radius:20px; background:rgba(255,255,255,0.5); border:1px solid rgba(255,255,255,0.8); transition:all 0.18s; backdrop-filter:blur(8px); }
-        .btn-nav-link:hover { background:rgba(255,255,255,0.8); color:var(--dark); }
-        .btn-logout { font-size:13px; color:var(--red); padding:8px 16px; border-radius:20px; background:rgba(234,67,53,0.07); border:1px solid rgba(234,67,53,0.2); cursor:pointer; transition:all 0.18s; font-family:'Roboto',sans-serif; }
-        .btn-logout:hover { background:rgba(234,67,53,0.14); }
 
-        .page-wrap { max-width:900px; margin:40px auto; padding:0 20px 80px; }
-        .page-title { font-family:'Nunito',sans-serif; font-size:30px; font-weight:800; color:var(--dark); letter-spacing:-0.5px; margin-bottom:6px; }
-        .page-sub { font-size:14px; color:var(--gray); font-weight:300; margin-bottom:28px; }
+        .logo {
+            font-family: 'Nunito', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
 
-        .glass-card { background:rgba(255,255,255,0.55); backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,0.8); border-radius:22px; padding:28px; margin-bottom:22px; box-shadow:0 6px 24px rgba(66,133,244,0.08),0 2px 6px rgba(0,0,0,0.04),inset 0 1px 0 rgba(255,255,255,0.95); }
+        .logo .n {
+            color: var(--blue)
+        }
 
-        .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:22px; }
-        .stat-card { background:rgba(255,255,255,0.55); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.8); border-radius:18px; padding:22px 16px; text-align:center; box-shadow:0 4px 16px rgba(66,133,244,0.07),inset 0 1px 0 rgba(255,255,255,0.9); position:relative; overflow:hidden; }
-        .stat-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; }
-        .stat-card:nth-child(1)::before { background:linear-gradient(90deg,var(--blue),#6aa3f8); }
-        .stat-card:nth-child(2)::before { background:linear-gradient(90deg,var(--red),#f07a72); }
-        .stat-card:nth-child(3)::before { background:linear-gradient(90deg,var(--green),#5ec97a); }
-        .stat-num { font-family:'Nunito',sans-serif; font-size:32px; font-weight:800; letter-spacing:-1px; margin-bottom:4px; }
-        .stat-card:nth-child(1) .stat-num{color:var(--blue)} .stat-card:nth-child(2) .stat-num{color:var(--red)} .stat-card:nth-child(3) .stat-num{color:var(--green)}
-        .stat-label { font-size:12px; color:var(--gray); font-weight:300; }
+        .logo .e {
+            color: var(--red)
+        }
 
-        .quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:22px; }
-        .quick-link { background:rgba(255,255,255,0.5); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.75); border-radius:18px; padding:22px 20px; display:flex; align-items:center; gap:16px; text-decoration:none; transition:all 0.2s; box-shadow:0 3px 12px rgba(66,133,244,0.06),inset 0 1px 0 rgba(255,255,255,0.9); }
-        .quick-link:hover { background:rgba(255,255,255,0.75); transform:translateY(-2px); box-shadow:0 8px 24px rgba(66,133,244,0.12); }
-        .quick-icon { width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0; }
-        .icon-blue{background:rgba(66,133,244,0.1);border:1px solid rgba(66,133,244,0.2)} .icon-green{background:rgba(52,168,83,0.1);border:1px solid rgba(52,168,83,0.2)}
-        .quick-title{font-weight:500;color:var(--dark);font-size:14px;margin-bottom:3px} .quick-sub{font-size:12px;color:var(--gray);font-weight:300}
+        .logo .w {
+            color: var(--yellow)
+        }
 
-        .section-title { font-family:'Nunito',sans-serif; font-size:18px; font-weight:800; color:var(--dark); margin-bottom:18px; letter-spacing:-0.3px; display:flex; align-items:center; gap:8px; }
-        .section-dot { width:8px; height:8px; border-radius:50%; }
+        .logo .s {
+            color: var(--blue)
+        }
+
+        .logo .w2 {
+            color: var(--green)
+        }
+
+        .logo .i {
+            color: var(--red)
+        }
+
+        .logo .r {
+            color: var(--yellow)
+        }
+
+        .logo .e2 {
+            color: var(--blue)
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-nav-link {
+            font-size: 13px;
+            color: var(--gray);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.18s;
+            backdrop-filter: blur(8px);
+        }
+
+        .btn-nav-link:hover {
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--dark);
+        }
+
+        .btn-logout {
+            font-size: 13px;
+            color: var(--red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(234, 67, 53, 0.07);
+            border: 1px solid rgba(234, 67, 53, 0.2);
+            cursor: pointer;
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .btn-logout:hover {
+            background: rgba(234, 67, 53, 0.14);
+        }
+
+        .page-wrap {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px 80px;
+        }
+
+        .page-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .page-sub {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 22px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 24px rgba(66, 133, 244, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 18px;
+            padding: 22px 16px;
+            text-align: center;
+            box-shadow: 0 4px 16px rgba(66, 133, 244, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card:nth-child(1)::before {
+            background: linear-gradient(90deg, var(--blue), #6aa3f8);
+        }
+
+        .stat-card:nth-child(2)::before {
+            background: linear-gradient(90deg, var(--red), #f07a72);
+        }
+
+        .stat-card:nth-child(3)::before {
+            background: linear-gradient(90deg, var(--green), #5ec97a);
+        }
+
+        .stat-num {
+            font-family: 'Nunito', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .stat-card:nth-child(1) .stat-num {
+            color: var(--blue)
+        }
+
+        .stat-card:nth-child(2) .stat-num {
+            color: var(--red)
+        }
+
+        .stat-card:nth-child(3) .stat-num {
+            color: var(--green)
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray);
+            font-weight: 300;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .quick-link {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-radius: 18px;
+            padding: 22px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 3px 12px rgba(66, 133, 244, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.75);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(66, 133, 244, 0.12);
+        }
+
+        .quick-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .icon-blue {
+            background: rgba(66, 133, 244, 0.1);
+            border: 1px solid rgba(66, 133, 244, 0.2)
+        }
+
+        .icon-green {
+            background: rgba(52, 168, 83, 0.1);
+            border: 1px solid rgba(52, 168, 83, 0.2)
+        }
+
+        .quick-title {
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+            margin-bottom: 3px
+        }
+
+        .quick-sub {
+            font-size: 12px;
+            color: var(--gray);
+            font-weight: 300
+        }
+
+        .section-title {
+            font-family: 'Nunito', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 18px;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
 
         /* FORM */
-        .field-label { display:block; font-size:11px; font-weight:600; color:var(--gray); margin-bottom:5px; letter-spacing:0.8px; text-transform:uppercase; }
-        .input-field { width:100%; background:rgba(255,255,255,0.7); border:1.5px solid rgba(255,255,255,0.9); border-radius:12px; padding:10px 14px; font-size:13px; outline:none; transition:all 0.2s; font-family:'Roboto',sans-serif; color:var(--dark); box-shadow:0 1px 4px rgba(0,0,0,0.05),inset 0 1px 2px rgba(255,255,255,0.8); backdrop-filter:blur(8px); }
-        .input-field::placeholder{color:#aab0bb}
-        .input-field:focus{border-color:rgba(66,133,244,0.5);background:rgba(255,255,255,0.9);box-shadow:0 0 0 3px rgba(66,133,244,0.12)}
-        select.input-field{cursor:pointer}
+        .field-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 5px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
 
-        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
-        .form-grid .full { grid-column:1/-1; }
-        .field-wrap { display:flex; flex-direction:column; }
+        .input-field {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            color: var(--dark);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+
+        .input-field::placeholder {
+            color: #aab0bb
+        }
+
+        .input-field:focus {
+            border-color: rgba(66, 133, 244, 0.5);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12)
+        }
+
+        select.input-field {
+            cursor: pointer
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-grid .full {
+            grid-column: 1/-1;
+        }
+
+        .field-wrap {
+            display: flex;
+            flex-direction: column;
+        }
 
         /* IMAGE ROW */
-        .image-row { display:flex; gap:14px; align-items:flex-start; }
-        .image-row .field-wrap { flex:1; }
-        .img-preview-box {
-            width:100px; height:70px; border-radius:10px; flex-shrink:0; overflow:hidden;
-            background:rgba(255,255,255,0.4); border:1.5px dashed rgba(66,133,244,0.25);
-            display:flex; align-items:center; justify-content:center; font-size:22px; opacity:0.5;
-            transition:all 0.2s;
+        .image-row {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
         }
-        .img-preview-box.has-img { border-style:solid; border-color:rgba(66,133,244,0.35); opacity:1; }
-        .img-preview-box img { width:100%; height:100%; object-fit:cover; display:block; }
 
-        .btn-add { background:linear-gradient(135deg,var(--blue) 0%,#6aa3f8 100%); color:white; padding:12px 32px; border-radius:12px; font-size:14px; font-weight:500; border:1px solid rgba(255,255,255,0.25); cursor:pointer; transition:all 0.2s; font-family:'Roboto',sans-serif; box-shadow:0 2px 10px rgba(66,133,244,0.3),inset 0 1px 0 rgba(255,255,255,0.2); }
-        .btn-add:hover{box-shadow:0 4px 16px rgba(66,133,244,0.45);transform:translateY(-1px)}
+        .image-row .field-wrap {
+            flex: 1;
+        }
+
+        .img-preview-box {
+            width: 100px;
+            height: 70px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1.5px dashed rgba(66, 133, 244, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            opacity: 0.5;
+            transition: all 0.2s;
+        }
+
+        .img-preview-box.has-img {
+            border-style: solid;
+            border-color: rgba(66, 133, 244, 0.35);
+            opacity: 1;
+        }
+
+        .img-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, var(--blue) 0%, #6aa3f8 100%);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 2px 10px rgba(66, 133, 244, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-add:hover {
+            box-shadow: 0 4px 16px rgba(66, 133, 244, 0.45);
+            transform: translateY(-1px)
+        }
 
         /* HINT BOX */
-        .hint-box { background:rgba(66,133,244,0.05); border:1px solid rgba(66,133,244,0.15); border-radius:12px; padding:14px 16px; margin-top:16px; }
-        .hint-title { font-size:12px; font-weight:600; color:var(--blue); margin-bottom:8px; }
-        .hint-step { font-size:12px; color:var(--gray); font-weight:300; line-height:1.9; }
-        .hint-step span { display:inline-block; width:18px; height:18px; background:var(--blue); color:white; border-radius:50%; font-size:10px; font-weight:700; text-align:center; line-height:18px; margin-right:6px; }
+        .hint-box {
+            background: rgba(66, 133, 244, 0.05);
+            border: 1px solid rgba(66, 133, 244, 0.15);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-top: 16px;
+        }
 
-        .msg{font-size:13px;padding:9px 14px;border-radius:10px;margin-top:12px;display:none}
-        .msg-success{background:rgba(52,168,83,0.08);border:1px solid rgba(52,168,83,0.25);color:#166534}
-        .msg-error{background:rgba(234,67,53,0.08);border:1px solid rgba(234,67,53,0.25);color:var(--red)}
+        .hint-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
+
+        .hint-step {
+            font-size: 12px;
+            color: var(--gray);
+            font-weight: 300;
+            line-height: 1.9;
+        }
+
+        .hint-step span {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: var(--blue);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 18px;
+            margin-right: 6px;
+        }
+
+        .msg {
+            font-size: 13px;
+            padding: 9px 14px;
+            border-radius: 10px;
+            margin-top: 12px;
+            display: none
+        }
+
+        .msg-success {
+            background: rgba(52, 168, 83, 0.08);
+            border: 1px solid rgba(52, 168, 83, 0.25);
+            color: #166534
+        }
+
+        .msg-error {
+            background: rgba(234, 67, 53, 0.08);
+            border: 1px solid rgba(234, 67, 53, 0.25);
+            color: var(--red)
+        }
 
         /* NEWS LIST */
-        .cat-filter{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
-        .cat-btn{font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;cursor:pointer;border:1.5px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.5);color:var(--gray);transition:all 0.18s;font-family:'Roboto',sans-serif;backdrop-filter:blur(8px)}
-        .cat-btn.active-all,.cat-btn.active-national{background:rgba(66,133,244,0.1);border-color:rgba(66,133,244,0.3);color:var(--blue)}
-        .cat-btn.active-international{background:rgba(234,67,53,0.08);border-color:rgba(234,67,53,0.3);color:var(--red)}
-        .cat-btn.active-sports{background:rgba(52,168,83,0.1);border-color:rgba(52,168,83,0.3);color:#166534}
-        .cat-btn.active-business{background:rgba(251,188,5,0.1);border-color:rgba(251,188,5,0.3);color:#b45309}
+        .cat-filter {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 18px;
+            flex-wrap: wrap
+        }
 
-        .news-section{margin-bottom:22px}
-        .news-section-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.6)}
-        .lbl-national{color:var(--blue)} .lbl-international{color:var(--red)} .lbl-sports{color:#166534} .lbl-business{color:#b45309}
+        .cat-btn {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--gray);
+            transition: all 0.18s;
+            font-family: 'Roboto', sans-serif;
+            backdrop-filter: blur(8px)
+        }
 
-        .news-item{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.45)}
-        .news-item:last-child{border-bottom:none}
-        .news-thumb{width:72px;height:50px;border-radius:8px;object-fit:cover;flex-shrink:0;background:linear-gradient(135deg,rgba(66,133,244,0.08),rgba(234,67,53,0.05));border:1px solid rgba(255,255,255,0.7)}
-        .news-thumb-ph{width:72px;height:50px;border-radius:8px;flex-shrink:0;background:rgba(255,255,255,0.4);border:1px dashed rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;opacity:0.4}
-        .news-item-body{flex:1;min-width:0}
-        .news-item-title{font-size:13px;font-weight:500;color:var(--dark);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .news-item-link{font-size:11px;color:var(--blue);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none;display:block}
-        .news-item-link:hover{text-decoration:underline}
-        .news-item-date{font-size:11px;color:#b0b5bc;margin-top:2px}
-        .btn-del{background:none;border:none;color:var(--red);font-size:12px;cursor:pointer;font-family:'Roboto',sans-serif;padding:5px 10px;border-radius:8px;transition:background 0.15s;flex-shrink:0}
-        .btn-del:hover{background:rgba(234,67,53,0.08)}
-        .news-empty{font-size:13px;color:var(--gray);font-weight:300;padding:10px 0}
+        .cat-btn.active-all,
+        .cat-btn.active-national {
+            background: rgba(66, 133, 244, 0.1);
+            border-color: rgba(66, 133, 244, 0.3);
+            color: var(--blue)
+        }
 
-        @media(max-width:700px){nav{padding:12px 20px}.form-grid{grid-template-columns:1fr}.quick-grid{grid-template-columns:1fr}.page-wrap{padding:0 16px 60px}}
+        .cat-btn.active-international {
+            background: rgba(234, 67, 53, 0.08);
+            border-color: rgba(234, 67, 53, 0.3);
+            color: var(--red)
+        }
+
+        .cat-btn.active-sports {
+            background: rgba(52, 168, 83, 0.1);
+            border-color: rgba(52, 168, 83, 0.3);
+            color: #166534
+        }
+
+        .cat-btn.active-business {
+            background: rgba(251, 188, 5, 0.1);
+            border-color: rgba(251, 188, 5, 0.3);
+            color: #b45309
+        }
+
+        .news-section {
+            margin-bottom: 22px
+        }
+
+        .news-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.6)
+        }
+
+        .lbl-national {
+            color: var(--blue)
+        }
+
+        .lbl-international {
+            color: var(--red)
+        }
+
+        .lbl-sports {
+            color: #166534
+        }
+
+        .lbl-business {
+            color: #b45309
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.45)
+        }
+
+        .news-item:last-child {
+            border-bottom: none
+        }
+
+        .news-thumb {
+            width: 72px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(66, 133, 244, 0.08), rgba(234, 67, 53, 0.05));
+            border: 1px solid rgba(255, 255, 255, 0.7)
+        }
+
+        .news-thumb-ph {
+            width: 72px;
+            height: 50px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px dashed rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0.4
+        }
+
+        .news-item-body {
+            flex: 1;
+            min-width: 0
+        }
+
+        .news-item-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--dark);
+            margin-bottom: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .news-item-link {
+            font-size: 11px;
+            color: var(--blue);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-decoration: none;
+            display: block
+        }
+
+        .news-item-link:hover {
+            text-decoration: underline
+        }
+
+        .news-item-date {
+            font-size: 11px;
+            color: #b0b5bc;
+            margin-top: 2px
+        }
+
+        .btn-del {
+            background: none;
+            border: none;
+            color: var(--red);
+            font-size: 12px;
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: background 0.15s;
+            flex-shrink: 0
+        }
+
+        .btn-del:hover {
+            background: rgba(234, 67, 53, 0.08)
+        }
+
+        .news-empty {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 300;
+            padding: 10px 0
+        }
+
+        @media(max-width:700px) {
+            nav {
+                padding: 12px 20px
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr
+            }
+
+            .page-wrap {
+                padding: 0 16px 60px
+            }
+        }
     </style>
 </head>
+
 <body>
 
-<nav>
-    <a href="/app/news.html" class="logo">
-        <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
-    </a>
-    <div class="nav-right">
-        <a href="/app/news.html" class="btn-nav-link">View News</a>
-        <button onclick="logout()" class="btn-logout">Logout</button>
-    </div>
-</nav>
-
-<div class="page-wrap">
-    <div class="page-title">Admin Panel</div>
-    <p class="page-sub">Manage your news platform</p>
-
-    <div class="stats-grid">
-        <div class="stat-card"><div class="stat-num" id="stat-users">—</div><div class="stat-label">Total Users</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-news">—</div><div class="stat-label">Total News</div></div>
-        <div class="stat-card"><div class="stat-num" id="stat-feedback">—</div><div class="stat-label">Feedback</div></div>
-    </div>
-
-    <div class="quick-grid">
-        <a href="/app/admin-users.html" class="quick-link">
-            <div class="quick-icon icon-blue">👥</div>
-            <div><div class="quick-title">User Management</div><div class="quick-sub">View, block, delete users</div></div>
+    <nav>
+        <a href="/app/news.html" class="logo">
+            <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span
+                class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
         </a>
-        <a href="/app/admin-feedback.html" class="quick-link">
-            <div class="quick-icon icon-green">💬</div>
-            <div><div class="quick-title">Feedback</div><div class="quick-sub">View and resolve feedback</div></div>
-        </a>
-    </div>
+        <div class="nav-right">
+            <a href="/app/news.html" class="btn-nav-link">View News</a>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </nav>
 
-    <!-- ADD NEWS FORM -->
-    <div class="glass-card">
-        <div class="section-title">
-            <div class="section-dot" style="background:var(--blue)"></div>
-            Add News
+    <div class="page-wrap">
+        <div class="page-title">Admin Panel</div>
+        <p class="page-sub">Manage your news platform</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-users">—</div>
+                <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-news">—</div>
+                <div class="stat-label">Total News</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-feedback">—</div>
+                <div class="stat-label">Feedback</div>
+            </div>
         </div>
 
-        <div class="form-grid">
-            <div class="field-wrap">
-                <label class="field-label">Article Title</label>
-                <input id="news-title" type="text" placeholder="e.g. Bangladesh wins cricket series" class="input-field"/>
+        <div class="quick-grid">
+            <a href="/app/admin-users.html" class="quick-link">
+                <div class="quick-icon icon-blue">👥</div>
+                <div>
+                    <div class="quick-title">User Management</div>
+                    <div class="quick-sub">View, block, delete users</div>
+                </div>
+            </a>
+            <a href="/app/admin-feedback.html" class="quick-link">
+                <div class="quick-icon icon-green">💬</div>
+                <div>
+                    <div class="quick-title">Feedback</div>
+                    <div class="quick-sub">View and resolve feedback</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- ADD NEWS FORM -->
+        <div class="glass-card">
+            <div class="section-title">
+                <div class="section-dot" style="background:var(--blue)"></div>
+                Add News
             </div>
-            <div class="field-wrap">
-                <label class="field-label">Category</label>
-                <select id="news-category" class="input-field">
-                    <option value="">Select Category</option>
-                    <option value="National">🇧🇩 National</option>
-                    <option value="International">🌍 International</option>
-                    <option value="Sports">⚽ Sports</option>
-                    <option value="Business">📈 Business</option>
-                </select>
-            </div>
-            <div class="field-wrap full">
-                <label class="field-label">Article URL</label>
-                <input id="news-link" type="url" placeholder="https://www.thedailystar.net/news/..." class="input-field"/>
-            </div>
-            <div class="full">
-                <label class="field-label">Image URL</label>
-                <div class="image-row">
-                    <div class="field-wrap">
-                        <input id="news-image" type="url" placeholder="https://cdn.example.com/photo.jpg" class="input-field"
-                            oninput="previewImg(this.value)"/>
-                        <div style="font-size:11px;color:var(--gray);margin-top:5px;font-weight:300;">
-                            Right-click the article's cover image → "Copy image address" → paste here
+
+            <div class="form-grid">
+                <div class="field-wrap">
+                    <label class="field-label">Article Title</label>
+                    <input id="news-title" type="text" placeholder="e.g. Bangladesh wins cricket series"
+                        class="input-field" />
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Category</label>
+                    <select id="news-category" class="input-field">
+                        <option value="">Select Category</option>
+                        <option value="National">🇧🇩 National</option>
+                        <option value="International">🌍 International</option>
+                        <option value="Sports">⚽ Sports</option>
+                        <option value="Business">📈 Business</option>
+                    </select>
+                </div>
+                <div class="field-wrap full">
+                    <label class="field-label">Article URL</label>
+                    <input id="news-link" type="url" placeholder="https://www.thedailystar.net/news/..."
+                        class="input-field" />
+                </div>
+                <div class="full">
+                    <label class="field-label">Image URL</label>
+                    <div class="image-row">
+                        <div class="field-wrap">
+                            <input id="news-image" type="url" placeholder="https://cdn.example.com/photo.jpg"
+                                class="input-field" oninput="previewImg(this.value)" />
+                            <div style="font-size:11px;color:var(--gray);margin-top:5px;font-weight:300;">
+                                Right-click the article's cover image → "Copy image address" → paste here
+                            </div>
+                        </div>
+                        <div class="img-preview-box" id="img-preview-box">
+                            <span id="img-placeholder">🖼️</span>
+                            <img id="img-preview" src="" alt=""
+                                style="display:none;width:100%;height:100%;object-fit:cover;"
+                                onerror="resetPreview()" />
                         </div>
                     </div>
-                    <div class="img-preview-box" id="img-preview-box">
-                        <span id="img-placeholder">🖼️</span>
-                        <img id="img-preview" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;"
-                            onerror="resetPreview()"/>
-                    </div>
+                </div>
+            </div>
+
+            <button onclick="addNews()" class="btn-add">＋ Add News</button>
+            <div id="news-msg" class="msg"></div>
+
+            <div class="hint-box">
+                <div class="hint-title">📌 How to get the image URL</div>
+                <div class="hint-step">
+                    <span>1</span>Open the article in Chrome or Firefox<br>
+                    <span>2</span>Right-click on the article's cover/thumbnail image<br>
+                    <span>3</span>Click <strong>"Copy image address"</strong> (Chrome) or <strong>"Copy Image
+                        Link"</strong> (Firefox)<br>
+                    <span>4</span>Paste it in the Image URL field above — a preview will appear
                 </div>
             </div>
         </div>
 
-        <button onclick="addNews()" class="btn-add">＋ Add News</button>
-        <div id="news-msg" class="msg"></div>
-
-        <div class="hint-box">
-            <div class="hint-title">📌 How to get the image URL</div>
-            <div class="hint-step">
-                <span>1</span>Open the article in Chrome or Firefox<br>
-                <span>2</span>Right-click on the article's cover/thumbnail image<br>
-                <span>3</span>Click <strong>"Copy image address"</strong> (Chrome) or <strong>"Copy Image Link"</strong> (Firefox)<br>
-                <span>4</span>Paste it in the Image URL field above — a preview will appear
+        <!-- NEWS LIST -->
+        <div class="glass-card">
+            <div class="section-title">
+                <div class="section-dot" style="background:var(--red)"></div>
+                All News
             </div>
+            <div class="cat-filter">
+                <button class="cat-btn active-all" onclick="setFilter('all',this)">All</button>
+                <button class="cat-btn" onclick="setFilter('national',this)">🇧🇩 National</button>
+                <button class="cat-btn" onclick="setFilter('international',this)">🌍 International</button>
+                <button class="cat-btn" onclick="setFilter('sports',this)">⚽ Sports</button>
+                <button class="cat-btn" onclick="setFilter('business',this)">📈 Business</button>
+            </div>
+            <div id="news-list"></div>
         </div>
     </div>
 
-    <!-- NEWS LIST -->
-    <div class="glass-card">
-        <div class="section-title">
-            <div class="section-dot" style="background:var(--red)"></div>
-            All News
-        </div>
-        <div class="cat-filter">
-            <button class="cat-btn active-all" onclick="setFilter('all',this)">All</button>
-            <button class="cat-btn" onclick="setFilter('national',this)">🇧🇩 National</button>
-            <button class="cat-btn" onclick="setFilter('international',this)">🌍 International</button>
-            <button class="cat-btn" onclick="setFilter('sports',this)">⚽ Sports</button>
-            <button class="cat-btn" onclick="setFilter('business',this)">📈 Business</button>
-        </div>
-        <div id="news-list"></div>
-    </div>
-</div>
+    <script>
+        let allNews = {}, activeFilter = 'all'
+        const CAT_META = {
+            national: { label: '🇧🇩 National', cls: 'lbl-national' },
+            international: { label: '🌍 International', cls: 'lbl-international' },
+            sports: { label: '⚽ Sports', cls: 'lbl-sports' },
+            business: { label: '📈 Business', cls: 'lbl-business' },
+        }
 
-<script>
-    let allNews = {}, activeFilter = 'all'
-    const CAT_META = {
-        national:      {label:'🇧🇩 National',     cls:'lbl-national'},
-        international: {label:'🌍 International', cls:'lbl-international'},
-        sports:        {label:'⚽ Sports',         cls:'lbl-sports'},
-        business:      {label:'📈 Business',       cls:'lbl-business'},
-    }
+        async function checkAdmin() {
+            const res = await fetch("/auth/me", { credentials: "include" })
+            if (!res.ok) return window.location.href = "/app/login.html"
+            const user = await res.json()
+            if (user.role !== "admin") window.location.href = "/app/news.html"
+        }
 
-    async function checkAdmin() {
-        const res = await fetch("/auth/me", {credentials:"include"})
-        if (!res.ok) return window.location.href = "/app/login.html"
-        const user = await res.json()
-        if (user.role !== "admin") window.location.href = "/app/news.html"
-    }
+        async function loadStats() {
+            const res = await fetch("/admin/stats", { credentials: "include" })
+            if (!res.ok) return
+            const s = await res.json()
+            document.getElementById("stat-users").textContent = s.total_users
+            document.getElementById("stat-news").textContent = s.total_news
+            document.getElementById("stat-feedback").textContent = s.total_feedback
+        }
 
-    async function loadStats() {
-        const res = await fetch("/admin/stats", {credentials:"include"})
-        if (!res.ok) return
-        const s = await res.json()
-        document.getElementById("stat-users").textContent = s.total_users
-        document.getElementById("stat-news").textContent  = s.total_news
-        document.getElementById("stat-feedback").textContent = s.total_feedback
-    }
+        async function loadNews() {
+            const res = await fetch("/news", { credentials: "include" })
+            if (!res.ok) return
+            allNews = await res.json()
+            renderNews()
+        }
 
-    async function loadNews() {
-        const res = await fetch("/news", {credentials:"include"})
-        if (!res.ok) return
-        allNews = await res.json()
-        renderNews()
-    }
+        function setFilter(cat, btn) {
+            activeFilter = cat
+            document.querySelectorAll('.cat-btn').forEach(b => b.className = 'cat-btn')
+            btn.classList.add('active-' + cat)
+            renderNews()
+        }
 
-    function setFilter(cat, btn) {
-        activeFilter = cat
-        document.querySelectorAll('.cat-btn').forEach(b => b.className = 'cat-btn')
-        btn.classList.add('active-' + cat)
-        renderNews()
-    }
-
-    function renderNews() {
-        const container = document.getElementById("news-list")
-        const cats = activeFilter === 'all' ? Object.keys(allNews) : [activeFilter]
-        let html = '', hasAny = false
-        for (const cat of cats) {
-            const items = allNews[cat] || []
-            if (!items.length) continue
-            hasAny = true
-            const m = CAT_META[cat] || {}
-            html += `<div class="news-section"><div class="news-section-label ${m.cls}">${m.label}</div>`
-            items.forEach(item => {
-                const date = (item.created_at || '').substring(0,10)
-                const thumb = item.image
-                    ? `<img class="news-thumb" src="${item.image}" loading="lazy" onerror="this.outerHTML='<div class=news-thumb-ph>📰</div>'">`
-                    : `<div class="news-thumb-ph">📰</div>`
-                html += `
+        function renderNews() {
+            const container = document.getElementById("news-list")
+            const cats = activeFilter === 'all' ? Object.keys(allNews) : [activeFilter]
+            let html = '', hasAny = false
+            for (const cat of cats) {
+                const items = allNews[cat] || []
+                if (!items.length) continue
+                hasAny = true
+                const m = CAT_META[cat] || {}
+                html += `<div class="news-section"><div class="news-section-label ${m.cls}">${m.label}</div>`
+                items.forEach(item => {
+                    const date = (item.created_at || '').substring(0, 10)
+                    const thumb = item.image
+                        ? `<img class="news-thumb" src="${item.image}" loading="lazy" onerror="this.outerHTML='<div class=news-thumb-ph>📰</div>'">`
+                        : `<div class="news-thumb-ph">📰</div>`
+                    html += `
                 <div class="news-item">
                     ${thumb}
                     <div class="news-item-body">
-                        <div class="news-item-title" title="${item.title||item.link}">${item.title||item.link}</div>
+                        <div class="news-item-title" title="${item.title || item.link}">${item.title || item.link}</div>
                         <a class="news-item-link" href="${item.link}" target="_blank" rel="noopener">${item.link}</a>
                         <div class="news-item-date">${date}</div>
                     </div>
+                    <button onclick='openEdit(${JSON.stringify(item).replace(/'/g, "&#39;")})' class="btn-del" style="color:var(--blue)">Edit</button>
                     <button onclick="deleteNews(${item.id})" class="btn-del">Delete</button>
                 </div>`
+                })
+                html += `</div>`
+            }
+            if (!hasAny) html = `<p class="news-empty">No news added yet.</p>`
+            container.innerHTML = html
+        }
+
+        function previewImg(url) {
+            const box = document.getElementById("img-preview-box")
+            const img = document.getElementById("img-preview")
+            const ph = document.getElementById("img-placeholder")
+            if (url && url.startsWith("http")) {
+                img.src = url
+                img.style.display = "block"
+                ph.style.display = "none"
+                box.classList.add("has-img")
+            } else {
+                resetPreview()
+            }
+        }
+        function resetPreview() {
+            document.getElementById("img-preview").style.display = "none"
+            document.getElementById("img-placeholder").style.display = "block"
+            document.getElementById("img-preview-box").classList.remove("has-img")
+        }
+
+        async function addNews() {
+            const link = document.getElementById("news-link").value.trim()
+            const category = document.getElementById("news-category").value
+            const title = document.getElementById("news-title").value.trim()
+            const image = document.getElementById("news-image").value.trim()
+            const msg = document.getElementById("news-msg")
+
+            if (!title) return showMsg(msg, "error", "Please enter the article title")
+            if (!link) return showMsg(msg, "error", "Please enter the article URL")
+            if (!category) return showMsg(msg, "error", "Please select a category")
+
+            const res = await fetch("/news", {
+                method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include",
+                body: JSON.stringify({ link, category, title, image: image || null })
             })
-            html += `</div>`
+            const data = await res.json()
+            if (res.ok) {
+                showMsg(msg, "success", "News added successfully!")
+                document.getElementById("news-title").value = ""
+                document.getElementById("news-link").value = ""
+                document.getElementById("news-image").value = ""
+                document.getElementById("news-category").value = ""
+                resetPreview()
+                loadNews(); loadStats()
+            } else {
+                showMsg(msg, "error", data.detail || "Failed to add news")
+            }
         }
-        if (!hasAny) html = `<p class="news-empty">No news added yet.</p>`
-        container.innerHTML = html
-    }
 
-    function previewImg(url) {
-        const box = document.getElementById("img-preview-box")
-        const img = document.getElementById("img-preview")
-        const ph  = document.getElementById("img-placeholder")
-        if (url && url.startsWith("http")) {
-            img.src = url
-            img.style.display = "block"
-            ph.style.display  = "none"
-            box.classList.add("has-img")
-        } else {
-            resetPreview()
+        async function deleteNews(id) {
+            if (!confirm("Delete this news?")) return
+            const res = await fetch(`/news/${id}`, { method: "DELETE", credentials: "include" })
+            if (res.ok) { loadNews(); loadStats() }
+            else { const d = await res.json(); alert(d.detail || "Failed") }
         }
-    }
-    function resetPreview() {
-        document.getElementById("img-preview").style.display = "none"
-        document.getElementById("img-placeholder").style.display = "block"
-        document.getElementById("img-preview-box").classList.remove("has-img")
-    }
 
-    async function addNews() {
-        const link     = document.getElementById("news-link").value.trim()
-        const category = document.getElementById("news-category").value
-        const title    = document.getElementById("news-title").value.trim()
-        const image    = document.getElementById("news-image").value.trim()
-        const msg      = document.getElementById("news-msg")
+        function showMsg(el, type, text) {
+            el.textContent = text
+            el.className = "msg msg-" + (type === "success" ? "success" : "error")
+            el.style.display = "block"
+            setTimeout(() => { el.style.display = "none" }, 3500)
+        }
 
-        if (!title)    return showMsg(msg, "error", "Please enter the article title")
-        if (!link)     return showMsg(msg, "error", "Please enter the article URL")
-        if (!category) return showMsg(msg, "error", "Please select a category")
+        async function logout() {
+            await fetch("/auth/logout", { method: "POST", credentials: "include" })
+            window.location.href = "/app/index.html"
+        }
 
-        const res = await fetch("/news", {
-            method:"POST", headers:{"Content-Type":"application/json"}, credentials:"include",
-            body: JSON.stringify({link, category, title, image: image || null})
+        let editingId = null
+
+        function openEdit(item) {
+            editingId = item.id
+            document.getElementById("edit-title").value = item.title || ""
+            document.getElementById("edit-category").value = item.category
+            document.getElementById("edit-link").value = item.link
+            document.getElementById("edit-image").value = item.image || ""
+            previewEditImg(item.image || "")
+            document.getElementById("edit-modal").style.display = "flex"
+            document.body.style.overflow = "hidden"
+        }
+
+        function closeEdit() {
+            document.getElementById("edit-modal").style.display = "none"
+            document.body.style.overflow = ""
+            editingId = null
+            resetEditPreview()
+        }
+
+        function previewEditImg(url) {
+            const box = document.getElementById("edit-img-preview-box")
+            const img = document.getElementById("edit-img-preview")
+            const ph = document.getElementById("edit-img-placeholder")
+            if (url && url.startsWith("http")) {
+                img.src = url; img.style.display = "block"
+                ph.style.display = "none"; box.classList.add("has-img")
+            } else { resetEditPreview() }
+        }
+
+        function resetEditPreview() {
+            document.getElementById("edit-img-preview").style.display = "none"
+            document.getElementById("edit-img-placeholder").style.display = "block"
+            document.getElementById("edit-img-preview-box").classList.remove("has-img")
+        }
+
+        async function saveEdit() {
+            const title = document.getElementById("edit-title").value.trim()
+            const category = document.getElementById("edit-category").value
+            const link = document.getElementById("edit-link").value.trim()
+            const image = document.getElementById("edit-image").value.trim()
+            const msg = document.getElementById("edit-msg")
+
+            if (!title) return showMsg(msg, "error", "Title is required")
+            if (!link) return showMsg(msg, "error", "URL is required")
+            if (!category) return showMsg(msg, "error", "Category is required")
+
+            const res = await fetch(`/news/${editingId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ title, category, link, image: image || null })
+            })
+            const data = await res.json()
+            if (res.ok) {
+                closeEdit()
+                loadNews()
+            } else {
+                showMsg(msg, "error", data.detail || "Failed to update")
+            }
+        }
+
+        // Close modal on backdrop click
+        document.getElementById("edit-modal").addEventListener("click", function (e) {
+            if (e.target === this) closeEdit()
         })
-        const data = await res.json()
-        if (res.ok) {
-            showMsg(msg, "success", "News added successfully!")
-            document.getElementById("news-title").value = ""
-            document.getElementById("news-link").value  = ""
-            document.getElementById("news-image").value = ""
-            document.getElementById("news-category").value = ""
-            resetPreview()
-            loadNews(); loadStats()
-        } else {
-            showMsg(msg, "error", data.detail || "Failed to add news")
-        }
-    }
 
-    async function deleteNews(id) {
-        if (!confirm("Delete this news?")) return
-        const res = await fetch(`/news/${id}`, {method:"DELETE", credentials:"include"})
-        if (res.ok) { loadNews(); loadStats() }
-        else { const d = await res.json(); alert(d.detail || "Failed") }
-    }
+        checkAdmin(); loadStats(); loadNews()
+    </script>
 
-    function showMsg(el, type, text) {
-        el.textContent = text
-        el.className = "msg msg-" + (type === "success" ? "success" : "error")
-        el.style.display = "block"
-        setTimeout(() => { el.style.display = "none" }, 3500)
-    }
 
-    async function logout() {
-        await fetch("/auth/logout", {method:"POST", credentials:"include"})
-        window.location.href = "/app/index.html"
-    }
-
-    checkAdmin(); loadStats(); loadNews()
-</script>
+    <!-- EDIT MODAL -->
+    <div id="edit-modal"
+        style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;">
+        <div
+            style="background:rgba(255,255,255,0.85);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border:1px solid rgba(255,255,255,0.9);border-radius:24px;padding:32px;width:100%;max-width:520px;box-shadow:0 16px 48px rgba(66,133,244,0.18);">
+            <div
+                style="font-family:'Nunito',sans-serif;font-size:20px;font-weight:800;margin-bottom:20px;color:var(--dark);display:flex;justify-content:space-between;align-items:center;">
+                ✏️ Edit News
+                <button onclick="closeEdit()"
+                    style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray);line-height:1;">×</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <div>
+                    <label class="field-label">Article Title</label>
+                    <input id="edit-title" type="text" class="input-field" placeholder="Article title" />
+                </div>
+                <div>
+                    <label class="field-label">Category</label>
+                    <select id="edit-category" class="input-field">
+                        <option value="National">🇧🇩 National</option>
+                        <option value="International">🌍 International</option>
+                        <option value="Sports">⚽ Sports</option>
+                        <option value="Business">📈 Business</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="field-label">Article URL</label>
+                    <input id="edit-link" type="url" class="input-field" placeholder="https://..." />
+                </div>
+                <div>
+                    <label class="field-label">Image URL</label>
+                    <div class="image-row">
+                        <div class="field-wrap" style="margin-bottom:0;">
+                            <input id="edit-image" type="url" class="input-field" placeholder="https://..."
+                                oninput="previewEditImg(this.value)" />
+                        </div>
+                        <div class="img-preview-box" id="edit-img-preview-box">
+                            <span id="edit-img-placeholder">🖼️</span>
+                            <img id="edit-img-preview" src="" alt=""
+                                style="display:none;width:100%;height:100%;object-fit:cover;"
+                                onerror="resetEditPreview()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="edit-msg" class="msg"></div>
+            <div style="display:flex;gap:10px;margin-top:22px;">
+                <button onclick="closeEdit()"
+                    style="flex:1;padding:11px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.5);color:var(--gray);font-size:14px;cursor:pointer;font-family:'Roboto',sans-serif;backdrop-filter:blur(8px);">Cancel</button>
+                <button onclick="saveEdit()"
+                    style="flex:2;background:linear-gradient(135deg,var(--blue) 0%,#6aa3f8 100%);color:white;padding:11px;border-radius:12px;font-size:14px;font-weight:500;border:1px solid rgba(255,255,255,0.25);cursor:pointer;font-family:'Roboto',sans-serif;box-shadow:0 2px 10px rgba(66,133,244,0.3);">Save
+                    Changes</button>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

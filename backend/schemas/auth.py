@@ -8,7 +8,7 @@ class SignupRequest(BaseModel):
 class VerifyOTPRequest(BaseModel):
     email: EmailStr
     code: str
-    purpose: str##########
+    purpose: str
 
 class ResendOTPRequest(BaseModel):
     email: EmailStr

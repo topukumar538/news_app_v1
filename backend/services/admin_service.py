@@ -1,5 +1,7 @@
 from sqlalchemy.orm import Session
 from models import User, NEWS, OTPCode, Feedback
+from fastapi import HTTPException
+
 
 def get_all_users(db: Session):
     users = db.query(User).order_by(User.created_at.desc()).all()
@@ -48,4 +50,5 @@ def get_stats(db: Session):
         "total_news": total_news,
         "total_feedback": total_feedback,
     }
+
 

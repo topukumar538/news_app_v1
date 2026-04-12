@@ -6,3 +6,9 @@ class NEWSCreate(BaseModel):
     category: str
     title: Optional[str] = None
     image: Optional[str] = None
+
+class NEWSUpdate(BaseModel):
+    link: Optional[str] = None
+    category: Optional[str] = None
+    title: Optional[str] = None
+    image: Optional[str] = None

@@ -14,7 +14,7 @@ app = FastAPI(title="ContentPlatform API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:5500"],  # your actual frontend origins
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:5500"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
@@ -25,9 +25,6 @@ app.include_router(news.router)
 app.include_router(admin.router)
 app.include_router(user.router)
 
-@app.get("/health")
-def health():
-    return {"status": "ok"}
 
 @app.get("/")
 def root(request: Request):

@@ -30,7 +30,7 @@ def resend_otp(email: str, purpose: str, db: Session):
         raise ValueError("Email not found")
     if purpose == "signup" and user.is_active:
         raise ValueError("Account already verified")
-    if purpose == "forgot_password" and not user.is_active:  # add this
+    if purpose == "forgot_password" and not user.is_active:  
         raise ValueError("Please verify your account first")
     create_otp(email, purpose, db)
     return {"message": "OTP resent successfully"}

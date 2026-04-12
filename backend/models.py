@@ -29,8 +29,8 @@ class NEWS(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     link: Mapped[str] = mapped_column(String)
     category: Mapped[str] = mapped_column(String)
-    title: Mapped[str] = mapped_column(String, nullable=True, default=None)   # NEW
-    image: Mapped[str] = mapped_column(String, nullable=True, default=None)   # NEW
+    title: Mapped[str] = mapped_column(String, nullable=True, default=None)   
+    image: Mapped[str] = mapped_column(String, nullable=True, default=None)   
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 class Feedback(Base):

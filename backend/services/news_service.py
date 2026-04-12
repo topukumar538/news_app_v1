@@ -43,3 +43,24 @@ def get_news(db: Session):
             for n in items
         ]
     return result
+
+def update_news(news_id: int, data, db: Session):
+    news = db.query(NEWS).filter(NEWS.id == news_id).first()
+    if not news:
+        raise HTTPException(status_code=404, detail="News not found")
+    if data.title is not None:
+        news.title = data.title
+    if data.link is not None:
+        news.link = data.link
+
+    CATEGORIES = ["National", "International", "Sports", "Business"]
+
+    if data.category is not None:
+        if data.category not in CATEGORIES:
+            raise HTTPException(status_code=400, detail=f"Category must be one of: {', '.join(CATEGORIES)}")
+        news.category = data.category
+    if data.image is not None:
+        news.image = data.image
+    db.commit()
+    db.refresh(news)
+    return news
