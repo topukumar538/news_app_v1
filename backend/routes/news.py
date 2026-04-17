@@ -8,18 +8,16 @@ router = APIRouter(tags=["News"])
 
 @router.get("/news")
 def get_news(db: Session = Depends(get_db), user=Depends(get_current_user)):
-    return news_service.get_news(db)
+    return news_service.get_news(db, user_id=user["user_id"])
 
-#admin route
 @router.post("/news")
 def create_news(data: NEWSCreate, db: Session = Depends(get_db), user=Depends(admin_only)):
     return news_service.create_news(data, db)
 
-#admin route
-@router.delete("/news/{news_id}")
-def delete_news(news_id: int, db: Session = Depends(get_db), user=Depends(admin_only)):
-    return news_service.delete_news(news_id, db)
-
 @router.patch("/news/{news_id}")
 def update_news(news_id: int, data: NEWSUpdate, db: Session = Depends(get_db), user=Depends(admin_only)):
     return news_service.update_news(news_id, data, db)
+
+@router.delete("/news/{news_id}")
+def delete_news(news_id: int, db: Session = Depends(get_db), user=Depends(admin_only)):
+    return news_service.delete_news(news_id, db)

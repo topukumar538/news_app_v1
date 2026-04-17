@@ -3,10 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from database import Base, engine
-from routes import auth, admin, user,news
+from routes import auth, admin, user, news, interaction
 from core.security import decode_token
 from jose import JWTError
-
 
 Base.metadata.create_all(bind=engine)
 
@@ -17,14 +16,18 @@ app.add_middleware(
     allow_origins=["http://localhost:3000", "http://127.0.0.1:5500"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 app.include_router(auth.router)
 app.include_router(news.router)
 app.include_router(admin.router)
 app.include_router(user.router)
+app.include_router(interaction.router)
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 
 @app.get("/")
 def root(request: Request):
@@ -41,6 +44,4 @@ def root(request: Request):
             pass
     return FileResponse("../frontend/index.html")
 
-
-# mount frontend LAST
 app.mount("/app", StaticFiles(directory="../frontend"), name="frontend")

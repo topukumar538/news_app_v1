@@ -19,7 +19,9 @@
                 #eef2ff;
             color:var(--dark);
         }
-        nav { padding:12px 36px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.68); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); border-bottom:1px solid rgba(255,255,255,0.85); box-shadow:0 2px 14px rgba(66,133,244,0.08); }
+
+        /* ── NAV ── */
+        nav { padding:12px 36px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; background:rgba(255,255,255,0.68); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); border-bottom:1px solid rgba(255,255,255,0.85); box-shadow:0 2px 14px rgba(66,133,244,0.08); }
         .logo{font-family:'Nunito',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;text-decoration:none}
         .logo .n{color:var(--blue)} .logo .e{color:var(--red)} .logo .w{color:var(--yellow)} .logo .s{color:var(--blue)}
         .logo .w2{color:var(--green)} .logo .i{color:var(--red)} .logo .r{color:var(--yellow)} .logo .e2{color:var(--blue)}
@@ -31,6 +33,7 @@
         .btn-logout{font-size:13px;color:var(--red);padding:7px 14px;border-radius:20px;background:rgba(234,67,53,.07);border:1px solid rgba(234,67,53,.2);cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .18s}
         .btn-logout:hover{background:rgba(234,67,53,.14)}
 
+        /* ── CATEGORY TABS ── */
         .cat-tabs{display:flex;padding:0 36px;background:rgba(255,255,255,.55);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.75);overflow-x:auto;scrollbar-width:none}
         .cat-tabs::-webkit-scrollbar{display:none}
         .cat-tab{padding:13px 20px;font-size:13px;font-weight:500;color:var(--gray);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .18s;white-space:nowrap;font-family:'IBM Plex Sans',sans-serif}
@@ -41,50 +44,107 @@
         .cat-tab.active.t-sports{color:#166634;border-bottom-color:var(--green)}
         .cat-tab.active.t-business{color:#b45309;border-bottom-color:var(--yellow)}
 
+        /* ── PAGE ── */
         .page-wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
-
         .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;margin-top:36px}
         .sec-head:first-child{margin-top:0}
         .sec-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap}
         .sec-line{flex:1;height:1px;background:rgba(0,0,0,.08)}
         .sl-national{color:var(--blue)} .sl-international{color:var(--red)} .sl-sports{color:#166534} .sl-business{color:#b45309}
 
-        /* HERO */
-        .hero-card{display:block;text-decoration:none;background:rgba(255,255,255,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.85);border-radius:22px;overflow:hidden;box-shadow:0 4px 20px rgba(66,133,244,.09),inset 0 1px 0 rgba(255,255,255,.95);transition:all .22s;margin-bottom:14px}
-        .hero-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(66,133,244,.14);background:rgba(255,255,255,.82)}
-        .hero-img-wrap{width:100%;height:300px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(234,67,53,.04));display:flex;align-items:center;justify-content:center}
+        /* ── HERO CARD ── */
+        .hero-card{background:rgba(255,255,255,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.85);border-radius:22px;overflow:hidden;box-shadow:0 4px 20px rgba(66,133,244,.09),inset 0 1px 0 rgba(255,255,255,.95);transition:box-shadow .22s,transform .22s;margin-bottom:14px}
+        .hero-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(66,133,244,.14)}
+        .hero-link-area{display:block;text-decoration:none;color:inherit}
+        .hero-img-wrap{width:100%;height:280px;overflow:hidden;background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(234,67,53,.04));display:flex;align-items:center;justify-content:center}
         .hero-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
         .hero-card:hover .hero-img{transform:scale(1.03)}
-        .hero-body{padding:20px 22px}
+        .hero-body{padding:18px 22px 14px}
         .hero-meta{display:flex;align-items:center;gap:6px;margin-bottom:10px}
         .source-favicon{width:14px;height:14px;border-radius:3px;flex-shrink:0}
         .source-name{font-size:11px;font-weight:500;color:var(--gray)}
         .card-time{font-size:11px;color:#b0b5bc;font-weight:300}
-        .hero-title{font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;line-height:1.4;color:var(--dark)}
+        .hero-title{font-family:'Libre Baskerville',serif;font-size:19px;font-weight:700;line-height:1.4;color:var(--dark)}
 
-        /* GRID */
+        /* ── GRID CARDS ── */
         .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:8px}
-        .news-card{display:block;text-decoration:none;background:rgba(255,255,255,.58);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.82);border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(66,133,244,.07),inset 0 1px 0 rgba(255,255,255,.9);transition:all .2s}
-        .news-card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(66,133,244,.13);background:rgba(255,255,255,.8)}
-        .card-img-wrap{height:150px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(234,67,53,.04));display:flex;align-items:center;justify-content:center}
+        .news-card{background:rgba(255,255,255,.58);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.82);border-radius:18px;overflow:hidden;box-shadow:0 3px 12px rgba(66,133,244,.07),inset 0 1px 0 rgba(255,255,255,.9);transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column}
+        .news-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(66,133,244,.13)}
+        .news-link-area{display:block;text-decoration:none;color:inherit;flex:1}
+        .card-img-wrap{height:145px;overflow:hidden;background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(234,67,53,.04));display:flex;align-items:center;justify-content:center}
         .card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
         .news-card:hover .card-img{transform:scale(1.05)}
-        .card-body{padding:14px}
-        .card-title{font-family:'Libre Baskerville',serif;font-size:14px;font-weight:700;line-height:1.45;color:var(--dark);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:10px}
+        .card-body{padding:12px 14px}
+        .card-title{font-family:'Libre Baskerville',serif;font-size:13.5px;font-weight:700;line-height:1.45;color:var(--dark);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px}
         .card-meta{display:flex;justify-content:space-between;align-items:center}
         .source-badge{display:flex;align-items:center;gap:5px}
-        .placeholder-icon{font-size:40px;opacity:.15}
+        .placeholder-icon{font-size:36px;opacity:.14}
 
+        /* ── INTERACTION BAR ── */
+        .interaction-bar{display:flex;align-items:center;gap:6px;padding:9px 14px;border-top:1px solid rgba(255,255,255,.65);background:rgba(255,255,255,.35);backdrop-filter:blur(8px)}
+        .like-btn,.cmt-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;border:none;font-size:12px;font-weight:500;cursor:pointer;transition:all .18s;font-family:'IBM Plex Sans',sans-serif;line-height:1}
+        .like-btn{background:rgba(234,67,53,.06);color:var(--gray);border:1px solid rgba(234,67,53,.15)}
+        .like-btn:hover,.like-btn.liked{background:rgba(234,67,53,.12);color:var(--red);border-color:rgba(234,67,53,.35)}
+        .like-btn .heart{font-size:13px;transition:transform .15s}
+        .like-btn.liked .heart{transform:scale(1.2)}
+        .cmt-btn{background:rgba(66,133,244,.06);color:var(--gray);border:1px solid rgba(66,133,244,.15)}
+        .cmt-btn:hover{background:rgba(66,133,244,.12);color:var(--blue);border-color:rgba(66,133,244,.3)}
+        .read-link{margin-left:auto;font-size:11.5px;color:var(--blue);text-decoration:none;padding:5px 11px;border-radius:20px;background:rgba(66,133,244,.07);border:1px solid rgba(66,133,244,.18);transition:all .18s;white-space:nowrap}
+        .read-link:hover{background:rgba(66,133,244,.14)}
+
+        /* ── COMMENT PANEL ── */
+        .cmt-overlay{position:fixed;inset:0;z-index:400;background:rgba(20,24,40,.38);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);display:none;justify-content:flex-end}
+        .cmt-overlay.open{display:flex}
+        .cmt-panel{width:440px;max-width:100vw;background:rgba(238,242,255,.97);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);border-left:1px solid rgba(255,255,255,.85);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(66,133,244,.13);animation:slideR .25s ease}
+        @keyframes slideR{from{transform:translateX(100%)}to{transform:translateX(0)}}
+
+        .panel-head{padding:18px 20px 14px;border-bottom:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.75);backdrop-filter:blur(16px);flex-shrink:0}
+        .panel-head-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+        .panel-title{font-family:'Nunito',sans-serif;font-size:17px;font-weight:800;color:var(--dark)}
+        .panel-close{width:30px;height:30px;border-radius:50%;border:none;background:rgba(0,0,0,.06);cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:background .15s;color:var(--dark);line-height:1}
+        .panel-close:hover{background:rgba(0,0,0,.13)}
+        .panel-news-title{font-size:12px;color:var(--gray);font-weight:300;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+        .cmt-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+        .cmt-empty{text-align:center;padding:50px 20px;color:var(--gray);font-size:14px;font-weight:300}
+        .cmt-empty-icon{font-size:40px;margin-bottom:10px}
+
+        .cmt-bubble{background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.95);border-radius:16px;padding:11px 13px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+        .cmt-bubble-head{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+        .cmt-avatar{width:27px;height:27px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#6aa3f8);display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+        .cmt-username{font-size:13px;font-weight:500;color:var(--dark);flex:1}
+        .cmt-time{font-size:11px;color:#b0b5bc}
+        .cmt-del{background:none;border:none;color:#d1d5db;cursor:pointer;font-size:11px;padding:3px 7px;border-radius:6px;transition:all .15s;font-family:'IBM Plex Sans',sans-serif}
+        .cmt-del:hover{color:var(--red);background:rgba(234,67,53,.07)}
+        .cmt-text{font-size:13px;color:#3a3d42;line-height:1.6;font-weight:300;word-break:break-word}
+
+        .cmt-input-area{padding:12px 14px;border-top:1px solid rgba(255,255,255,.75);background:rgba(255,255,255,.72);backdrop-filter:blur(16px);flex-shrink:0}
+        .cmt-input-row{display:flex;gap:8px;align-items:flex-end}
+        .cmt-textarea{flex:1;background:rgba(255,255,255,.85);border:1.5px solid rgba(255,255,255,.95);border-radius:14px;padding:9px 13px;font-size:13px;resize:none;outline:none;font-family:'IBM Plex Sans',sans-serif;color:var(--dark);box-shadow:0 1px 4px rgba(0,0,0,.05);min-height:40px;max-height:96px;overflow-y:auto;transition:border-color .2s;line-height:1.5}
+        .cmt-textarea::placeholder{color:#aab0bb}
+        .cmt-textarea:focus{border-color:rgba(66,133,244,.4)}
+        .cmt-send{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#6aa3f8);border:none;color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(66,133,244,.35);transition:all .18s;flex-shrink:0}
+        .cmt-send:hover{box-shadow:0 4px 14px rgba(66,133,244,.45);transform:scale(1.06)}
+        .cmt-send:disabled{opacity:.5;transform:none;cursor:not-allowed}
+
+        /* ── SKELETON ── */
         .skeleton{background:linear-gradient(90deg,rgba(255,255,255,.4) 25%,rgba(255,255,255,.75) 50%,rgba(255,255,255,.4) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:18px}
         @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
         .empty-state{text-align:center;padding:70px 20px;background:rgba(255,255,255,.45);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.7);border-radius:20px}
 
-        @media(max-width:700px){nav{padding:10px 16px}.cat-tabs{padding:0 10px}.page-wrap{padding:20px 12px 60px}.news-grid{grid-template-columns:1fr 1fr}.hero-img-wrap{height:200px}}
+        @media(max-width:700px){
+            nav{padding:10px 16px}.cat-tabs{padding:0 10px}
+            .page-wrap{padding:20px 12px 60px}
+            .news-grid{grid-template-columns:1fr 1fr}
+            .hero-img-wrap{height:190px}
+            .cmt-panel{width:100vw}
+        }
         @media(max-width:480px){.news-grid{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
     <a href="/app/news.html" class="logo">
         <span class="n">N</span><span class="e">e</span><span class="w">w</span><span class="s">s</span><span class="w2">W</span><span class="i">i</span><span class="r">r</span><span class="e2">e</span>
@@ -98,6 +158,7 @@
     </div>
 </nav>
 
+<!-- CATEGORY TABS -->
 <div class="cat-tabs">
     <button class="cat-tab active" onclick="setTab('all',this)">🏠 All</button>
     <button class="cat-tab t-national"      onclick="setTab('national',this)">🇧🇩 National</button>
@@ -106,8 +167,9 @@
     <button class="cat-tab t-business"      onclick="setTab('business',this)">📈 Business</button>
 </div>
 
+<!-- FEED -->
 <div class="page-wrap" id="page-wrap">
-    <div class="skeleton" style="height:300px;margin-bottom:14px;border-radius:22px;"></div>
+    <div class="skeleton" style="height:280px;margin-bottom:14px;border-radius:22px;"></div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:13px;">
         <div class="skeleton" style="height:220px;"></div>
         <div class="skeleton" style="height:220px;"></div>
@@ -115,30 +177,70 @@
     </div>
 </div>
 
+<!-- COMMENT PANEL OVERLAY -->
+<div class="cmt-overlay" id="cmt-overlay" onclick="handleOverlayClick(event)">
+    <div class="cmt-panel" id="cmt-panel">
+        <div class="panel-head">
+            <div class="panel-head-row">
+                <span class="panel-title">💬 Comments</span>
+                <button class="panel-close" onclick="closeComments()">✕</button>
+            </div>
+            <div class="panel-news-title" id="panel-news-title"></div>
+        </div>
+
+        <div class="cmt-body" id="cmt-body">
+            <div class="cmt-empty">
+                <div class="cmt-empty-icon">💭</div>
+                <p>No comments yet</p>
+            </div>
+        </div>
+
+        <div class="cmt-input-area">
+            <div class="cmt-input-row">
+                <textarea
+                    id="cmt-input"
+                    class="cmt-textarea"
+                    placeholder="Write a comment…"
+                    rows="1"
+                    onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendComment()}"
+                    oninput="autoResize(this)"
+                ></textarea>
+                <button class="cmt-send" id="cmt-send-btn" onclick="sendComment()">➤</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+/* ── STATE ── */
 const CAT_META = {
-    national:      {label:'🇧🇩 National',      sl:'sl-national',      tab:'t-national'},
-    international: {label:'🌍 International',  sl:'sl-international', tab:'t-international'},
-    sports:        {label:'⚽ Sports',          sl:'sl-sports',        tab:'t-sports'},
-    business:      {label:'📈 Business',        sl:'sl-business',      tab:'t-business'},
+    national:      {label:'🇧🇩 National',      sl:'sl-national'},
+    international: {label:'🌍 International',  sl:'sl-international'},
+    sports:        {label:'⚽ Sports',          sl:'sl-sports'},
+    business:      {label:'📈 Business',        sl:'sl-business'},
 }
 let allNews = {}, activeTab = 'all'
+let currentUserId = null, currentUserRole = null
+let activeNewsId = null, activeNewsTitle = ''
 
+/* ── USER ── */
 async function loadUser() {
     try {
         const res = await fetch("/auth/me", {credentials:"include"})
         if (res.status === 401) return window.location.href = "/app/login.html"
         const user = await res.json()
+        currentUserId = user.user_id
+        currentUserRole = user.role
         document.getElementById("username-display").textContent = user.username
         if (user.role === "admin") document.getElementById("admin-link").style.display = "inline-block"
-    } catch(e) {}
+    } catch(e) { window.location.href = "/app/login.html" }
 }
 
+/* ── NEWS ── */
 async function loadNews() {
     try {
         const res = await fetch("/news", {credentials:"include"})
         if (res.status === 401) return window.location.href = "/app/login.html"
-        // title and image come directly from DB — no OG scraping
         allNews = await res.json()
         renderPage()
     } catch(e) {
@@ -166,12 +268,26 @@ function timeAgo(str) {
     return Math.floor(diff/86400) + 'd ago'
 }
 function getFavicon(link) {
-    try { return `https://www.google.com/s2/favicons?domain=${new URL(link).hostname}&sz=32` }
-    catch { return '' }
+    try { return `https://www.google.com/s2/favicons?domain=${new URL(link).hostname}&sz=32` } catch { return '' }
 }
 function getDomain(link) {
-    try { return new URL(link).hostname.replace('www.','') }
-    catch { return link }
+    try { return new URL(link).hostname.replace('www.','') } catch { return link }
+}
+
+function interactionBar(a) {
+    return `
+    <div class="interaction-bar">
+        <button class="like-btn ${a.user_liked ? 'liked' : ''}" id="like-${a.id}" onclick="toggleLike(${a.id}, event)">
+            <span class="heart">${a.user_liked ? '❤️' : '🤍'}</span>
+            <span id="like-count-${a.id}">${a.like_count}</span>
+        </button>
+        <button class="cmt-btn" onclick="openComments(${a.id}, \`${(a.title || getDomain(a.link)).replace(/`/g,'\'')}\`, event)">
+            💬 <span id="cmt-count-${a.id}">${a.comment_count}</span>
+        </button>
+        <a class="read-link" href="${a.link}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+            Read →
+        </a>
+    </div>`
 }
 
 function renderPage() {
@@ -186,49 +302,55 @@ function renderPage() {
 
         html += `<div class="sec-head"><span class="sec-label ${m.sl}">${m.label}</span><div class="sec-line"></div></div>`
 
-        // HERO
+        // ── HERO ──
         const hero = items[0]
         html += `
-        <a class="hero-card" href="${hero.link}" target="_blank" rel="noopener noreferrer">
-            <div class="hero-img-wrap">
-                ${hero.image
-                    ? `<img class="hero-img" src="${hero.image}" onerror="this.parentElement.innerHTML='<span class=placeholder-icon>📰</span>'" loading="lazy">`
-                    : `<span class="placeholder-icon">📰</span>`}
-            </div>
-            <div class="hero-body">
-                <div class="hero-meta">
-                    <img class="source-favicon" src="${getFavicon(hero.link)}" onerror="this.style.display='none'">
-                    <span class="source-name">${getDomain(hero.link)}</span>
-                    <span style="color:#d1d5db;margin:0 4px;">·</span>
-                    <span class="card-time">${timeAgo(hero.created_at)}</span>
+        <div class="hero-card" id="card-${hero.id}">
+            <a class="hero-link-area" href="${hero.link}" target="_blank" rel="noopener noreferrer">
+                <div class="hero-img-wrap">
+                    ${hero.image
+                        ? `<img class="hero-img" src="${hero.image}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=placeholder-icon>📰</span>'">`
+                        : `<span class="placeholder-icon">📰</span>`}
                 </div>
-                <div class="hero-title">${hero.title || getDomain(hero.link)}</div>
-            </div>
-        </a>`
+                <div class="hero-body">
+                    <div class="hero-meta">
+                        <img class="source-favicon" src="${getFavicon(hero.link)}" onerror="this.style.display='none'">
+                        <span class="source-name">${getDomain(hero.link)}</span>
+                        <span style="color:#d1d5db;margin:0 4px;">·</span>
+                        <span class="card-time">${timeAgo(hero.created_at)}</span>
+                    </div>
+                    <div class="hero-title">${hero.title || getDomain(hero.link)}</div>
+                </div>
+            </a>
+            ${interactionBar(hero)}
+        </div>`
 
-        // GRID
+        // ── GRID ──
         const rest = items.slice(1)
         if (rest.length) {
             html += `<div class="news-grid">`
             rest.forEach(a => {
                 html += `
-                <a class="news-card" href="${a.link}" target="_blank" rel="noopener noreferrer">
-                    <div class="card-img-wrap">
-                        ${a.image
-                            ? `<img class="card-img" src="${a.image}" onerror="this.parentElement.innerHTML='<span class=placeholder-icon>📰</span>'" loading="lazy">`
-                            : `<span class="placeholder-icon">📰</span>`}
-                    </div>
-                    <div class="card-body">
-                        <div class="card-title">${a.title || getDomain(a.link)}</div>
-                        <div class="card-meta">
-                            <div class="source-badge">
-                                <img class="source-favicon" src="${getFavicon(a.link)}" onerror="this.style.display='none'">
-                                <span class="source-name">${getDomain(a.link)}</span>
-                            </div>
-                            <span class="card-time">${timeAgo(a.created_at)}</span>
+                <div class="news-card" id="card-${a.id}">
+                    <a class="news-link-area" href="${a.link}" target="_blank" rel="noopener noreferrer">
+                        <div class="card-img-wrap">
+                            ${a.image
+                                ? `<img class="card-img" src="${a.image}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=placeholder-icon>📰</span>'">`
+                                : `<span class="placeholder-icon">📰</span>`}
                         </div>
-                    </div>
-                </a>`
+                        <div class="card-body">
+                            <div class="card-title">${a.title || getDomain(a.link)}</div>
+                            <div class="card-meta">
+                                <div class="source-badge">
+                                    <img class="source-favicon" src="${getFavicon(a.link)}" onerror="this.style.display='none'">
+                                    <span class="source-name">${getDomain(a.link)}</span>
+                                </div>
+                                <span class="card-time">${timeAgo(a.created_at)}</span>
+                            </div>
+                        </div>
+                    </a>
+                    ${interactionBar(a)}
+                </div>`
             })
             html += `</div>`
         }
@@ -243,10 +365,156 @@ function renderPage() {
     wrap.innerHTML = html
 }
 
+/* ── LIKES ── */
+async function toggleLike(newsId, event) {
+    event.preventDefault(); event.stopPropagation()
+    const btn = document.getElementById(`like-${newsId}`)
+    if (!btn) return
+    btn.disabled = true
+    try {
+        const res = await fetch(`/news/${newsId}/like`, {method:'POST', credentials:'include'})
+        if (!res.ok) return
+        const data = await res.json()
+        const isLiked = data.liked
+
+        // Update button state
+        btn.className = `like-btn ${isLiked ? 'liked' : ''}`
+        btn.querySelector('.heart').textContent = isLiked ? '❤️' : '🤍'
+        document.getElementById(`like-count-${newsId}`).textContent = data.like_count
+
+        // Sync local data
+        for (const cat of Object.values(allNews)) {
+            const item = cat.find(n => n.id === newsId)
+            if (item) { item.user_liked = isLiked; item.like_count = data.like_count; break }
+        }
+    } finally { btn.disabled = false }
+}
+
+/* ── COMMENTS ── */
+async function openComments(newsId, title, event) {
+    event.preventDefault(); event.stopPropagation()
+    activeNewsId = newsId
+    activeNewsTitle = title
+    document.getElementById('panel-news-title').textContent = title
+    document.getElementById('cmt-overlay').classList.add('open')
+    document.body.style.overflow = 'hidden'
+    await fetchComments()
+}
+
+function closeComments() {
+    document.getElementById('cmt-overlay').classList.remove('open')
+    document.body.style.overflow = ''
+    activeNewsId = null
+    document.getElementById('cmt-input').value = ''
+}
+
+function handleOverlayClick(e) {
+    if (e.target === document.getElementById('cmt-overlay')) closeComments()
+}
+
+async function fetchComments() {
+    const body = document.getElementById('cmt-body')
+    body.innerHTML = `<div class="cmt-empty"><div class="cmt-empty-icon">⏳</div><p>Loading…</p></div>`
+    try {
+        const res = await fetch(`/news/${activeNewsId}/comments`, {credentials:'include'})
+        const comments = await res.json()
+        renderComments(comments)
+    } catch {
+        body.innerHTML = `<div class="cmt-empty"><p>Failed to load comments.</p></div>`
+    }
+}
+
+function relTime(str) {
+    const diff = (Date.now() - new Date(str)) / 1000
+    if (diff < 60) return 'just now'
+    if (diff < 3600) return Math.floor(diff/60) + 'm ago'
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago'
+    return str.substring(0, 10)
+}
+
+function renderComments(comments) {
+    const body = document.getElementById('cmt-body')
+    if (!comments.length) {
+        body.innerHTML = `<div class="cmt-empty"><div class="cmt-empty-icon">💭</div><p>No comments yet. Be the first!</p></div>`
+        return
+    }
+    body.innerHTML = comments.map(c => {
+        const canDelete = c.user_id === currentUserId || currentUserRole === 'admin'
+        const delRoute  = currentUserRole === 'admin' ? `/admin/comments/${c.id}` : `/comments/${c.id}`
+        return `
+        <div class="cmt-bubble" id="cmt-bubble-${c.id}">
+            <div class="cmt-bubble-head">
+                <div class="cmt-avatar">${c.username[0].toUpperCase()}</div>
+                <span class="cmt-username">${c.username}</span>
+                <span class="cmt-time">${relTime(c.created_at)}</span>
+                ${canDelete ? `<button class="cmt-del" onclick="deleteComment(${c.id},'${delRoute}')">✕</button>` : ''}
+            </div>
+            <div class="cmt-text">${escHtml(c.content)}</div>
+        </div>`
+    }).join('')
+    body.scrollTop = body.scrollHeight
+}
+
+async function sendComment() {
+    const input = document.getElementById('cmt-input')
+    const content = input.value.trim()
+    if (!content || !activeNewsId) return
+    const btn = document.getElementById('cmt-send-btn')
+    btn.disabled = true
+    try {
+        const res = await fetch(`/news/${activeNewsId}/comments`, {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({content})
+        })
+        if (!res.ok) return
+        input.value = ''; input.style.height = ''
+        // Update comment count in feed
+        const countEl = document.getElementById(`cmt-count-${activeNewsId}`)
+        if (countEl) countEl.textContent = parseInt(countEl.textContent || 0) + 1
+        for (const cat of Object.values(allNews)) {
+            const item = cat.find(n => n.id === activeNewsId)
+            if (item) { item.comment_count++; break }
+        }
+        await fetchComments()
+    } finally { btn.disabled = false }
+}
+
+async function deleteComment(commentId, route) {
+    if (!confirm('Delete this comment?')) return
+    const res = await fetch(route, {method:'DELETE', credentials:'include'})
+    if (res.ok) {
+        document.getElementById(`cmt-bubble-${commentId}`)?.remove()
+        const countEl = document.getElementById(`cmt-count-${activeNewsId}`)
+        if (countEl) countEl.textContent = Math.max(0, parseInt(countEl.textContent) - 1)
+        for (const cat of Object.values(allNews)) {
+            const item = cat.find(n => n.id === activeNewsId)
+            if (item) { item.comment_count = Math.max(0, item.comment_count - 1); break }
+        }
+        const body = document.getElementById('cmt-body')
+        if (!body.querySelectorAll('.cmt-bubble').length) {
+            body.innerHTML = `<div class="cmt-empty"><div class="cmt-empty-icon">💭</div><p>No comments yet. Be the first!</p></div>`
+        }
+    }
+}
+
+function autoResize(el) {
+    el.style.height = 'auto'
+    el.style.height = Math.min(el.scrollHeight, 96) + 'px'
+}
+
+function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')
+}
+
 async function logout() {
     await fetch("/auth/logout", {method:"POST", credentials:"include"})
     window.location.href = "/app/index.html"
 }
+
+/* ── KEYBOARD CLOSE ── */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeComments() })
 
 loadUser()
 loadNews()

@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from core.dependencies import get_db, admin_only
-from services import admin_service
-from services import feedback_service
+from services import admin_service, feedback_service, interaction_service
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
@@ -43,5 +42,20 @@ def resolve_feedback(feedback_id: int, db: Session = Depends(get_db), user=Depen
 def delete_feedback(feedback_id: int, db: Session = Depends(get_db), user=Depends(admin_only)):
     try:
         return feedback_service.delete_feedback(feedback_id, db)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/news/engagement")
+def get_news_engagement(
+    sort: str = Query(default="combined", pattern="^(combined|likes|comments)$"),
+    db: Session = Depends(get_db),
+    user=Depends(admin_only),
+):
+    return interaction_service.get_news_engagement(db, sort=sort)
+
+@router.delete("/comments/{comment_id}")
+def admin_delete_comment(comment_id: int, db: Session = Depends(get_db), user=Depends(admin_only)):
+    try:
+        return interaction_service.delete_comment(0, comment_id, db, is_admin=True)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
