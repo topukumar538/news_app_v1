@@ -274,14 +274,19 @@ function getDomain(link) {
     try { return new URL(link).hostname.replace('www.','') } catch { return link }
 }
 
+// FIX: use data-news-id and data-news-title attributes instead of embedding
+// the title as a string argument inside the onclick attribute.
+// The old approach broke silently when titles contained double quotes,
+// apostrophes, or other characters that corrupted the HTML attribute.
 function interactionBar(a) {
+    const safeTitle = (a.title || getDomain(a.link)).replace(/"/g, '&quot;')
     return `
     <div class="interaction-bar">
         <button class="like-btn ${a.user_liked ? 'liked' : ''}" id="like-${a.id}" onclick="toggleLike(${a.id}, event)">
             <span class="heart">${a.user_liked ? '❤️' : '🤍'}</span>
             <span id="like-count-${a.id}">${a.like_count}</span>
         </button>
-        <button class="cmt-btn" onclick="openComments(${a.id}, \`${(a.title || getDomain(a.link)).replace(/`/g,'\'')}\`, event)">
+        <button class="cmt-btn" data-news-id="${a.id}" data-news-title="${safeTitle}" onclick="openComments(this, event)">
             💬 <span id="cmt-count-${a.id}">${a.comment_count}</span>
         </button>
         <a class="read-link" href="${a.link}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
@@ -391,8 +396,12 @@ async function toggleLike(newsId, event) {
 }
 
 /* ── COMMENTS ── */
-async function openComments(newsId, title, event) {
+// FIX: now receives the button element itself so we can safely read
+// the title from data-news-title without any HTML attribute escaping issues.
+async function openComments(btn, event) {
     event.preventDefault(); event.stopPropagation()
+    const newsId = parseInt(btn.dataset.newsId)
+    const title = btn.dataset.newsTitle || ''
     activeNewsId = newsId
     activeNewsTitle = title
     document.getElementById('panel-news-title').textContent = title
